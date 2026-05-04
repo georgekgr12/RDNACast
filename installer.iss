@@ -2,7 +2,7 @@
 ; Packages the CMake RelWithDebInfo build output
 
 #define MyAppName "GK_OBS_Lite_AMD"
-#define MyAppVersion "0.6.6"
+#define MyAppVersion "0.6.7"
 #define MyAppPublisher "George Karagioules"
 #define MyAppExeName "obs64.exe"
 #define MyAppId "{{E7A3F1B2-5D8C-4A6E-9F0B-3C7D2E1A4B5F}"

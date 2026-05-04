@@ -17,7 +17,7 @@
  * runs it, and restarts the app.
  * ============================================================ */
 
-#define GK_OBS_LITE_VERSION "0.6.6"
+#define GK_OBS_LITE_VERSION "0.6.7"
 #define GK_OBS_LITE_RELEASES_REPO "georgekgr12/GK_OBS_LITE_AMD_RELEASES"
 #define GK_OBS_LITE_RELEASES_API "https://api.github.com/repos/" GK_OBS_LITE_RELEASES_REPO "/releases/latest"
 

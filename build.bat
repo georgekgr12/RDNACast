@@ -17,7 +17,7 @@ if not exist "%VSWHERE%" (
     exit /b 1
 )
 
-for /f "usebackq tokens=*" %%i in (`"%VSWHERE%" -latest -property installationPath`) do set "VS_PATH=%%i"
+for /f "usebackq tokens=*" %%i in (`"%VSWHERE%" -products * -latest -property installationPath`) do set "VS_PATH=%%i"
 if not defined VS_PATH (
     echo ERROR: Visual Studio 2022 not found.
     pause
