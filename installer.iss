@@ -1,10 +1,12 @@
-; GK_OBS_Lite_AMD — Inno Setup installer script
+; RDNA Cast — Inno Setup installer script
 ; Packages the CMake RelWithDebInfo build output
 
-#define MyAppName "GK_OBS_Lite_AMD"
-#define MyAppVersion "0.6.7"
+#define MyAppName "RDNA Cast"
+#define MyAppNameShort "RDNACast"
+#define MyAppVersion "0.7.0"
 #define MyAppPublisher "George Karagioules"
 #define MyAppExeName "obs64.exe"
+; AppId retained from GK_OBS_Lite_AMD so existing v0.6.x installs auto-upgrade
 #define MyAppId "{{E7A3F1B2-5D8C-4A6E-9F0B-3C7D2E1A4B5F}"
 #define BuildDir "build_amd_lite\rundir\RelWithDebInfo"
 
@@ -16,12 +18,12 @@ AppVerName={#MyAppName} {#MyAppVersion}
 AppPublisher={#MyAppPublisher}
 AppPublisherURL=https://github.com/georgekgr12/GK_OBS_LITE_AMD
 AppSupportURL=https://github.com/georgekgr12/GK_OBS_LITE_AMD/issues
-DefaultDirName={autopf}\{#MyAppName}
+DefaultDirName={autopf}\{#MyAppNameShort}
 DefaultGroupName={#MyAppName}
 DisableProgramGroupPage=yes
 LicenseFile=installer_assets\LICENSE.txt
 OutputDir=dist-installer
-OutputBaseFilename=GK_OBS_Lite_AMD_Setup_{#MyAppVersion}
+OutputBaseFilename=RDNACast_Setup_{#MyAppVersion}
 Compression=lzma2
 SolidCompression=yes
 SetupIconFile=UI\cmake\windows\obs-studio.ico
@@ -37,7 +39,7 @@ CloseApplications=force
 RestartApplications=no
 VersionInfoVersion={#MyAppVersion}.0
 VersionInfoCompany={#MyAppPublisher}
-VersionInfoDescription=GK OBS Lite AMD Edition — Lightweight AMD-optimized OBS
+VersionInfoDescription=RDNA Cast — High-performance streaming for AMD Radeon
 VersionInfoCopyright=Copyright (c) 2026 {#MyAppPublisher}
 VersionInfoProductName={#MyAppName}
 VersionInfoProductVersion={#MyAppVersion}
@@ -75,8 +77,17 @@ Name: "{group}\Uninstall {#MyAppName}"; Filename: "{uninstallexe}"
 [Run]
 Filename: "{app}\bin\64bit\{#MyAppExeName}"; WorkingDir: "{app}\bin\64bit"; Description: "Launch {#MyAppName}"; Flags: nowait postinstall skipifsilent
 
+[InstallDelete]
+; Clean up legacy GK_OBS_Lite_AMD shortcuts/folders if upgrading from v0.6.x
+Type: files; Name: "{autodesktop}\GK_OBS_Lite_AMD.lnk"
+Type: files; Name: "{group}\GK_OBS_Lite_AMD.lnk"
+Type: files; Name: "{group}\Uninstall GK_OBS_Lite_AMD.lnk"
+
 [UninstallDelete]
 ; Clean up logs and crash reports on uninstall; preserve user settings in config\
+Type: filesandordirs; Name: "{app}\config\rdnacast\logs"
+Type: filesandordirs; Name: "{app}\config\rdnacast\crashes"
+Type: filesandordirs; Name: "{app}\config\rdnacast\profiler_data"
 Type: filesandordirs; Name: "{app}\config\obs-studio\logs"
 Type: filesandordirs; Name: "{app}\config\obs-studio\crashes"
 Type: filesandordirs; Name: "{app}\config\obs-studio\profiler_data"

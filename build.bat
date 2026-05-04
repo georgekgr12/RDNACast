@@ -2,8 +2,8 @@
 setlocal EnableDelayedExpansion
 
 echo ============================================================
-echo   OBS Lite AMD Edition - Build ^& Package Script
-echo   Target: AMD Ryzen 5700X3D + RX 9070 XT
+echo   RDNA Cast - Build ^& Package Script
+echo   Target: AMD Radeon (Zen 2+ / RDNA+)
 echo ============================================================
 echo.
 
@@ -36,7 +36,7 @@ echo   Environment initialized.
 echo.
 
 :: Step 1: Configure with CMake
-echo [2/5] Configuring CMake (amd-lite-x64 preset)...
+echo [2/5] Configuring CMake (amd-lite-x64 preset, RDNA Cast)...
 cmake --preset amd-lite-x64
 if errorlevel 1 (
     echo ERROR: CMake configuration failed.
@@ -48,7 +48,7 @@ echo   Configuration complete.
 echo.
 
 :: Step 2: Build
-echo [3/5] Building OBS Lite AMD Edition (RelWithDebInfo)...
+echo [3/5] Building RDNA Cast (RelWithDebInfo)...
 cmake --build build_amd_lite --config RelWithDebInfo --parallel
 if errorlevel 1 (
     echo ERROR: Build failed. Check the output above for errors.

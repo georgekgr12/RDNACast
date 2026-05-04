@@ -3974,7 +3974,7 @@ void OBSBasic::CheckForUpdates(bool manualUpdate)
 	connect(gkThread, &GKUpdateThread::NoUpdate, this, [this](bool manual) {
 		ui->actionCheckForUpdates->setEnabled(true);
 		if (manual)
-			QMessageBox::information(this, "GK_OBS_Lite_AMD",
+			QMessageBox::information(this, "RDNA Cast",
 						 "You are running the latest version (" GK_OBS_LITE_VERSION ").");
 	});
 
@@ -4952,7 +4952,7 @@ void OBSBasic::closeEvent(QCloseEvent *event)
 			EnablePreviewDisplay(false);
 		if (showHide)
 			showHide->setText(QTStr("Basic.SystemTray.Show"));
-		trayIcon->showMessage("OBS Lite AMD Edition",
+		trayIcon->showMessage("RDNA Cast",
 				      QTStr("Basic.SystemTray.ClosedToTray"),
 				      QSystemTrayIcon::Information, 3000);
 		return;
@@ -8847,7 +8847,7 @@ void OBSBasic::UpdateTitleBar()
 	const char *sceneCollection = config_get_string(App()->GetUserConfig(), "Basic", "SceneCollection");
 
 #ifdef OBS_AMD_LITE
-	name << "GK_OBS_Lite_AMD " GK_OBS_LITE_VERSION;
+	name << "RDNA Cast " GK_OBS_LITE_VERSION;
 #else
 	name << "OBS ";
 	if (previewProgramMode)
@@ -9224,7 +9224,7 @@ void OBSBasic::SystemTrayInit()
 #endif
 	trayIcon.reset(new QSystemTrayIcon(QIcon::fromTheme("obs-tray", trayIconFile), this));
 #ifdef OBS_AMD_LITE
-	trayIcon->setToolTip("OBS Lite AMD Edition");
+	trayIcon->setToolTip("RDNA Cast");
 #else
 	trayIcon->setToolTip("OBS Studio");
 #endif

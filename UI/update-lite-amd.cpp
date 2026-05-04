@@ -58,7 +58,7 @@ void GKUpdateThread::run()
 	std::string output;
 	std::string error;
 	long responseCode = 0;
-	std::string versionHeader = "User-Agent: GK_OBS_Lite_AMD/";
+	std::string versionHeader = "User-Agent: RDNACast/";
 	versionHeader += GK_OBS_LITE_VERSION;
 
 	std::vector<std::string> extraHeaders;
@@ -134,13 +134,13 @@ GKUpdateDialog::GKUpdateDialog(QWidget *parent, const QString &ver, const QStrin
 	  version(ver),
 	  downloadUrl(url)
 {
-	setWindowTitle("Update Available — GK_OBS_Lite_AMD");
+	setWindowTitle("Update Available — RDNA Cast");
 	setMinimumWidth(450);
 	setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
 	auto *layout = new QVBoxLayout(this);
 
-	auto *titleLabel = new QLabel(QString("<h2>GK_OBS_Lite_AMD %1 is available!</h2>"
+	auto *titleLabel = new QLabel(QString("<h2>RDNA Cast %1 is available!</h2>"
 					      "<p>You are currently running version %2.</p>")
 					      .arg(ver, GK_OBS_LITE_VERSION));
 	titleLabel->setWordWrap(true);
@@ -252,7 +252,7 @@ void GKUpdateDialog::StartDownload()
 	QString tempDir = QStandardPaths::writableLocation(QStandardPaths::TempLocation);
 	QString filename = QUrl(downloadUrl).fileName();
 	if (filename.isEmpty())
-		filename = "GK_OBS_Lite_AMD_Setup.exe";
+		filename = "RDNACast_Setup.exe";
 	installerPath = tempDir + "/" + filename;
 	QFile::remove(installerPath);
 
@@ -289,7 +289,7 @@ void GKUpdateDialog::StartDownload()
 		curl_easy_setopt(curl, CURLOPT_XFERINFODATA, &progCtx);
 		curl_easy_setopt(curl, CURLOPT_NOPROGRESS, 0L);
 		curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
-		curl_easy_setopt(curl, CURLOPT_USERAGENT, "GK_OBS_Lite_AMD/" GK_OBS_LITE_VERSION);
+		curl_easy_setopt(curl, CURLOPT_USERAGENT, "RDNACast/" GK_OBS_LITE_VERSION);
 		curl_easy_setopt(curl, CURLOPT_TIMEOUT, 600L);
 		curl_easy_setopt(curl, CURLOPT_FAILONERROR, 1L);
 		curl_obs_set_revoke_setting(curl);
@@ -354,7 +354,7 @@ void GKUpdateDialog::OnDownloadFinished()
 	QTimer::singleShot(500, this, [this]() {
 		/* Create a helper script that waits for us to exit, then runs installer */
 		QString tempDir = QStandardPaths::writableLocation(QStandardPaths::TempLocation);
-		QString scriptPath = tempDir + "/gk_obs_update.bat";
+		QString scriptPath = tempDir + "/rdnacast_update.bat";
 		QFile script(scriptPath);
 		if (script.open(QIODevice::WriteOnly | QIODevice::Text)) {
 			QString bat = QString(
@@ -400,7 +400,7 @@ void GKUpdateDialog::OnDownloadError(const QString &error)
 
 GKAboutDialog::GKAboutDialog(QWidget *parent) : QDialog(parent)
 {
-	setWindowTitle("About GK_OBS_Lite_AMD");
+	setWindowTitle("About RDNA Cast");
 	setFixedSize(480, 420);
 	setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
@@ -408,11 +408,14 @@ GKAboutDialog::GKAboutDialog(QWidget *parent) : QDialog(parent)
 
 	auto *titleLabel = new QLabel(
 		"<div style='text-align:center;'>"
-		"<h1 style='color:#e63946;'>GK_OBS_Lite_AMD</h1>"
+		"<h1 style='color:#e63946;'>RDNA Cast</h1>"
 		"<p style='font-size:14px;'>Version " GK_OBS_LITE_VERSION " (64-bit)</p>"
-		"<p>Lightweight, AMD-optimized OBS for streaming &amp; recording.</p>"
+		"<p>High-performance streaming for AMD Radeon. Gaming unleashed.</p>"
 		"<p><b>Developer:</b> George Karagioules</p>"
 		"<p><b>Based on:</b> OBS Studio 31.0.3 by the OBS Project</p>"
+		"<p style='font-size:11px;color:#888;'>Not affiliated with, endorsed by, or sponsored by "
+		"Advanced Micro Devices, Inc. or the OBS Project. &quot;AMD&quot;, &quot;Radeon&quot;, and "
+		"&quot;RDNA&quot; are trademarks of Advanced Micro Devices, Inc.</p>"
 		"<hr>"
 		"</div>");
 	titleLabel->setWordWrap(true);

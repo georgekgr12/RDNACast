@@ -1,7 +1,14 @@
-GK_OBS_Lite_AMD — End User License Agreement
-==============================================
+RDNA Cast — End User License Agreement
+========================================
 
-MIT License
+RDNA Cast is an independent software project. It is not affiliated with,
+endorsed by, or sponsored by Advanced Micro Devices, Inc. or the OBS Project.
+"AMD", "Radeon", and "RDNA" are trademarks of Advanced Micro Devices, Inc.,
+used here only descriptively to indicate target hardware compatibility.
+
+==============================================================================
+
+MIT License — RDNA Cast additions
 
 Copyright (c) 2026 George Karagioules
 
@@ -25,11 +32,14 @@ SOFTWARE.
 
 ==============================================================================
 
+GPL v2.0 — OBS Studio base
+
 This software is based on OBS Studio, which is licensed under the
 GNU General Public License v2.0 (GPLv2).
 
 OBS Studio
 Copyright (C) Hugh Bailey and contributors
+https://obsproject.com
 
 This program is free software; you can redistribute it and/or modify it under
 the terms of the GNU General Public License as published by the Free Software
@@ -45,8 +55,15 @@ https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 ==============================================================================
 
+Third-party libraries
+
 AMD AMF SDK
 Copyright (c) Advanced Micro Devices, Inc. All rights reserved.
+
+Additional bundled libraries (FFmpeg, x264, Qt, libcurl, json11, blake2,
+libcaption, libdshowcapture, w32-pthreads) are distributed under their
+respective licenses. See THIRD_PARTY_LICENSES.md in the source distribution
+for full details.
 
 ==============================================================================
 

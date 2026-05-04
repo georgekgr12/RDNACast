@@ -1,4 +1,6 @@
-# OBS Lite AMD Edition — Project Context
+# RDNA Cast — Project Context
+
+(Internal flag is still `OBS_AMD_LITE`, source layout is unchanged. This is the same project, rebranded from "GK OBS Lite AMD Edition" in v0.7.0 for trademark compliance.)
 
 ## Target Hardware
 - **CPU**: AMD Ryzen 7 5700X3D (Zen 3, 8C/16T, 3D V-Cache)

@@ -1,11 +1,11 @@
 <p align="center">
-  <img src="Logo-removebg-preview.png" alt="OBS Lite AMD Edition" width="180">
+  <img src="installer_assets/rdnacast_logo.png" alt="RDNA Cast" width="280">
 </p>
 
-<h1 align="center">GK OBS Lite AMD Edition</h1>
+<h1 align="center">RDNA Cast</h1>
 
 <p align="center">
-  <strong>Stripped-down, AMD-optimized OBS for streaming and recording with minimal resource usage.</strong><br>
+  <strong>High-performance video recording &amp; streaming for AMD Radeon. Gaming unleashed.</strong><br>
   <em>~85% less RAM than stock OBS. Fixes AMD bitrate spikes. Built for gamers.</em>
 </p>
 
@@ -19,14 +19,20 @@
 
 ---
 
+## Disclaimer
+
+**RDNA Cast is an independent open-source project.** It is **not affiliated with, endorsed by, or sponsored by** Advanced Micro Devices, Inc. or the OBS Project. "AMD", "Radeon", and "RDNA" are trademarks of Advanced Micro Devices, Inc., used here only descriptively to indicate target hardware compatibility.
+
+RDNA Cast is a fork of [OBS Studio](https://obsproject.com), redistributed under the GNU General Public License v2.0. See [COPYING](COPYING) for the full GPL text and [THIRD_PARTY_LICENSES.md](THIRD_PARTY_LICENSES.md) for bundled-library licenses.
+
 ## What is this?
 
-GK OBS Lite AMD Edition is a **lightweight fork of [OBS Studio](https://obsproject.com) 31.0.3**, built exclusively for **AMD hardware on Windows**. It strips out everything you don't need, optimizes what's left for AMD Zen 3+ CPUs and RDNA GPUs, and **fixes real AMD encoder bugs** that cause bitrate spikes and drops during streaming.
+RDNA Cast is a **lightweight fork of [OBS Studio](https://obsproject.com) 31.0.3**, built exclusively for **AMD hardware on Windows**. It strips out everything you don't need, optimizes what's left for AMD Zen 3+ CPUs and RDNA GPUs, and **fixes real AMD encoder bugs** that cause bitrate spikes and drops during streaming.
 
 ## Performance
 
-| Metric | Stock OBS 31.0.3 | GK OBS Lite AMD |
-|--------|-------------------|-----------------|
+| Metric | Stock OBS 31.0.3 | RDNA Cast |
+|--------|-------------------|-----------|
 | **RAM (idle)** | ~300-400 MB | **~52 MB** |
 | **Threads** | ~50-60 | **~15** |
 | **Plugin DLLs** | ~30+ | **12** |
@@ -137,13 +143,20 @@ Run `build.bat` — handles CMake configure, build, and Inno Setup packaging in 
 
 ## How It Works
 
-All changes are gated behind `OBS_AMD_LITE` CMake flag and `#ifdef OBS_AMD_LITE` preprocessor guards. Building without the flag produces stock OBS Studio.
+All RDNA Cast changes are gated behind the `OBS_AMD_LITE` CMake flag and `#ifdef OBS_AMD_LITE` preprocessor guards. Building without the flag produces stock OBS Studio. This makes upstream merges from [obsproject/obs-studio](https://github.com/obsproject/obs-studio) straightforward.
 
 ## Credits
 
-- [OBS Studio](https://obsproject.com) by the OBS Project
-- [AMD AMF SDK](https://github.com/GPUOpen-LibrariesAndSDKs/AMF)
+- [OBS Studio](https://obsproject.com) by the OBS Project — the foundation this project is built on
+- [AMD AMF SDK](https://github.com/GPUOpen-LibrariesAndSDKs/AMF) — hardware encoding interface
+- All upstream OBS contributors listed in [AUTHORS](AUTHORS)
+
+If you use RDNA Cast and want to support the upstream project that makes it possible, please **[contribute to OBS Studio](https://obsproject.com/contribute)**.
 
 ## License
 
-MIT License (GK OBS Lite AMD additions) + [GNU General Public License v2.0](COPYING) (OBS Studio base).
+- RDNA Cast additions: **MIT License** — Copyright (c) 2026 George Karagioules
+- OBS Studio base: **GNU General Public License v2.0** — see [COPYING](COPYING)
+- Bundled third-party libraries: see [THIRD_PARTY_LICENSES.md](THIRD_PARTY_LICENSES.md)
+
+Full text in [installer_assets/LICENSE.txt](installer_assets/LICENSE.txt) (shipped in the installer).

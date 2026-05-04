@@ -1,14 +1,17 @@
 # Exclude everything
 /*
 
-# OBS Lite AMD Edition extras
+# RDNA Cast extras
 !/build.bat
 !/installer.iss
 !/installer_assets
 !/Logo.png
-!/Logo-removebg-preview.png
 !/CLAUDE.md
 !/README.md
+!/CHANGELOG.md
+!/THIRD_PARTY_LICENSES.md
+!/ROADMAP.md
+!/setup_youtube_credentials.bat
 
 # Downloaded deps and build output (large, not committed)
 .deps/

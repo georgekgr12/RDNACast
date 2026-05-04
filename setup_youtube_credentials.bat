@@ -1,6 +1,6 @@
 @echo off
 echo ============================================================
-echo   GK OBS Lite AMD — YouTube OAuth Credential Setup
+echo   RDNA Cast — YouTube OAuth Credential Setup
 echo ============================================================
 echo.
 echo This sets up your Google OAuth credentials as permanent
