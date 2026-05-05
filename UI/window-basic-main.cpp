@@ -202,11 +202,11 @@ static void AddExtraModulePaths()
 
 	char base_module_dir[512];
 #if defined(_WIN32)
-	int ret = GetProgramDataPath(base_module_dir, sizeof(base_module_dir), "obs-studio/plugins/%module%");
+	int ret = GetProgramDataPath(base_module_dir, sizeof(base_module_dir), "rdnacast/plugins/%module%");
 #elif defined(__APPLE__)
-	int ret = GetAppConfigPath(base_module_dir, sizeof(base_module_dir), "obs-studio/plugins/%module%.plugin");
+	int ret = GetAppConfigPath(base_module_dir, sizeof(base_module_dir), "rdnacast/plugins/%module%.plugin");
 #else
-	int ret = GetAppConfigPath(base_module_dir, sizeof(base_module_dir), "obs-studio/plugins/%module%");
+	int ret = GetAppConfigPath(base_module_dir, sizeof(base_module_dir), "rdnacast/plugins/%module%");
 #endif
 
 	if (ret <= 0)
@@ -220,13 +220,13 @@ static void AddExtraModulePaths()
 #ifndef __aarch64__
 	/* Legacy System Library Search Path */
 	char system_legacy_module_dir[PATH_MAX];
-	GetProgramDataPath(system_legacy_module_dir, sizeof(system_legacy_module_dir), "obs-studio/plugins/%module%");
+	GetProgramDataPath(system_legacy_module_dir, sizeof(system_legacy_module_dir), "rdnacast/plugins/%module%");
 	std::string path_system_legacy = system_legacy_module_dir;
 	obs_add_module_path((path_system_legacy + "/bin").c_str(), (path_system_legacy + "/data").c_str());
 
 	/* Legacy User Application Support Search Path */
 	char user_legacy_module_dir[PATH_MAX];
-	GetAppConfigPath(user_legacy_module_dir, sizeof(user_legacy_module_dir), "obs-studio/plugins/%module%");
+	GetAppConfigPath(user_legacy_module_dir, sizeof(user_legacy_module_dir), "rdnacast/plugins/%module%");
 	std::string path_user_legacy = user_legacy_module_dir;
 	obs_add_module_path((path_user_legacy + "/bin").c_str(), (path_user_legacy + "/data").c_str());
 #endif
@@ -6366,7 +6366,7 @@ void OBSBasic::UploadLog(const char *subdir, const char *file, const bool crash)
 void OBSBasic::on_actionShowLogs_triggered()
 {
 	char logDir[512];
-	if (GetAppConfigPath(logDir, sizeof(logDir), "obs-studio/logs") <= 0)
+	if (GetAppConfigPath(logDir, sizeof(logDir), "rdnacast/logs") <= 0)
 		return;
 
 	QUrl url = QUrl::fromLocalFile(QT_UTF8(logDir));
@@ -6375,12 +6375,12 @@ void OBSBasic::on_actionShowLogs_triggered()
 
 void OBSBasic::on_actionUploadCurrentLog_triggered()
 {
-	UploadLog("obs-studio/logs", App()->GetCurrentLog(), false);
+	UploadLog("rdnacast/logs", App()->GetCurrentLog(), false);
 }
 
 void OBSBasic::on_actionUploadLastLog_triggered()
 {
-	UploadLog("obs-studio/logs", App()->GetLastLog(), false);
+	UploadLog("rdnacast/logs", App()->GetLastLog(), false);
 }
 
 void OBSBasic::on_actionViewCurrentLog_triggered()
@@ -6397,7 +6397,7 @@ void OBSBasic::on_actionViewCurrentLog_triggered()
 void OBSBasic::on_actionShowCrashLogs_triggered()
 {
 	char logDir[512];
-	if (GetAppConfigPath(logDir, sizeof(logDir), "obs-studio/crashes") <= 0)
+	if (GetAppConfigPath(logDir, sizeof(logDir), "rdnacast/crashes") <= 0)
 		return;
 
 	QUrl url = QUrl::fromLocalFile(QT_UTF8(logDir));
@@ -6406,7 +6406,7 @@ void OBSBasic::on_actionShowCrashLogs_triggered()
 
 void OBSBasic::on_actionUploadLastCrashLog_triggered()
 {
-	UploadLog("obs-studio/crashes", App()->GetLastCrashLog(), true);
+	UploadLog("rdnacast/crashes", App()->GetLastCrashLog(), true);
 }
 
 void OBSBasic::on_actionCheckForUpdates_triggered()
@@ -7878,7 +7878,7 @@ void OBSBasic::on_actionReleaseNotes_triggered()
 
 void OBSBasic::on_actionShowSettingsFolder_triggered()
 {
-	const std::string userConfigPath = App()->userConfigLocation.u8string() + "/obs-studio";
+	const std::string userConfigPath = App()->userConfigLocation.u8string() + "/rdnacast";
 	const QString userConfigLocation = QString::fromStdString(userConfigPath);
 
 	QDesktopServices::openUrl(QUrl::fromLocalFile(userConfigLocation));
@@ -8940,7 +8940,7 @@ int OBSBasic::GetProfilePath(char *path, size_t size, const char *file) const
 	if (!file)
 		file = "";
 
-	ret = GetAppConfigPath(profiles_path, 512, "obs-studio/basic/profiles");
+	ret = GetAppConfigPath(profiles_path, 512, "rdnacast/basic/profiles");
 	if (ret <= 0)
 		return ret;
 

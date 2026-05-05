@@ -1220,7 +1220,7 @@ static void ClearShaderCache()
 {
 	wchar_t shader_path[MAX_PATH];
 	SHGetFolderPathW(NULL, CSIDL_COMMON_APPDATA, NULL, SHGFP_TYPE_CURRENT, shader_path);
-	StringCbCatW(shader_path, sizeof(shader_path), L"\\obs-studio\\shader-cache");
+	StringCbCatW(shader_path, sizeof(shader_path), L"\\rdnacast\\shader-cache");
 	filesystem::remove_all(shader_path);
 }
 
@@ -1335,7 +1335,7 @@ static bool Update(wchar_t *cmdLine)
 		}
 	}
 
-	StringCbCat(lpAppDataPath, sizeof(lpAppDataPath), L"\\obs-studio");
+	StringCbCat(lpAppDataPath, sizeof(lpAppDataPath), L"\\rdnacast");
 
 	/* ------------------------------------- *
 	 * Get download path                     */
