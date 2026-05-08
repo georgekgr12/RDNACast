@@ -70,7 +70,7 @@ private:
 	volatile bool cancelRequested = false;
 };
 
-/* --- About / EULA Dialog --- */
+/* --- About / License Dialog --- */
 
 class GKAboutDialog : public QDialog {
 	Q_OBJECT

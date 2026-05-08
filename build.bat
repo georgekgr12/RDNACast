@@ -7,6 +7,9 @@ echo   Target: AMD Radeon (Zen 2+ / RDNA+)
 echo ============================================================
 echo.
 
+set "APP_VERSION=0.7.10"
+set "INSTALLER_NAME=RDNACast_Setup_%APP_VERSION%.exe"
+
 :: Step 0: Find Visual Studio
 echo [1/5] Locating Visual Studio 2022...
 set "VSWHERE=%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe"
@@ -91,10 +94,10 @@ echo.
 
 :: Step 4: Copy to desktop
 echo [5/5] Copying installer to Desktop...
-copy /Y "dist-installer\OBS_Lite_AMD_Edition_Setup.exe" "%USERPROFILE%\Desktop\OBS_Lite_AMD_Edition_Setup.exe" >nul
+copy /Y "dist-installer\%INSTALLER_NAME%" "%USERPROFILE%\Desktop\%INSTALLER_NAME%" >nul
 if errorlevel 1 (
     echo WARNING: Could not copy to Desktop. Installer is at:
-    echo   dist-installer\OBS_Lite_AMD_Edition_Setup.exe
+    echo   dist-installer\%INSTALLER_NAME%
 ) else (
     echo   Installer copied to Desktop!
 )
@@ -102,14 +105,14 @@ if errorlevel 1 (
 echo.
 echo ============================================================
 echo   BUILD COMPLETE!
-echo   Installer: dist-installer\OBS_Lite_AMD_Edition_Setup.exe
+echo   Installer: dist-installer\%INSTALLER_NAME%
 echo   Also on your Desktop.
 echo ============================================================
 echo.
 
 :: Generate SHA256 hash
 echo SHA256 Hash:
-certutil -hashfile "dist-installer\OBS_Lite_AMD_Edition_Setup.exe" SHA256 2>nul | findstr /v "hash"
+certutil -hashfile "dist-installer\%INSTALLER_NAME%" SHA256 2>nul | findstr /v "hash"
 echo.
 
 pause

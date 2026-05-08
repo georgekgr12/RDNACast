@@ -429,7 +429,7 @@ void GKUpdateDialog::OnDownloadError(const QString &error)
 }
 
 /* ============================================================
- * GKAboutDialog — About + MIT EULA
+ * GKAboutDialog - About + license notices
  * ============================================================ */
 
 GKAboutDialog::GKAboutDialog(QWidget *parent) : QDialog(parent)
@@ -462,19 +462,30 @@ GKAboutDialog::GKAboutDialog(QWidget *parent) : QDialog(parent)
 	titleLabel->setAlignment(Qt::AlignCenter);
 	layout->addWidget(titleLabel);
 
-	auto *eulaLabel = new QLabel("<b>MIT License</b>");
+	auto *eulaLabel = new QLabel("<b>Licenses</b>");
 	layout->addWidget(eulaLabel);
 
 	auto *eulaBrowser = new QTextBrowser();
 	eulaBrowser->setPlainText(
-		"MIT License\n\n"
+		"RDNA Cast is an OBS Studio fork. The combined application and "
+		"binary distributions are redistributed under the GNU General "
+		"Public License version 2.0 or, at your option, any later version "
+		"(GPL-2.0-or-later).\n\n"
+		"The complete GPL text is included in the installed COPYING file "
+		"and in the source repository.\n\n"
+		"Original RDNA Cast additions are also offered under the MIT "
+		"License by George Karagioules. That MIT grant applies only to "
+		"original RDNA Cast additions and does not relicense OBS Studio or "
+		"the combined OBS-derived application.\n\n"
+		"MIT License - RDNA Cast original additions\n\n"
 		"Copyright (c) 2026 George Karagioules\n\n"
 		"Permission is hereby granted, free of charge, to any person obtaining a copy "
-		"of this software and associated documentation files (the \"Software\"), to deal "
-		"in the Software without restriction, including without limitation the rights "
-		"to use, copy, modify, merge, publish, distribute, sublicense, and/or sell "
-		"copies of the Software, and to permit persons to whom the Software is "
-		"furnished to do so, subject to the following conditions:\n\n"
+		"of the original RDNA Cast additions and associated documentation files "
+		"(the \"Software\"), to deal in the Software without restriction, including "
+		"without limitation the rights to use, copy, modify, merge, publish, "
+		"distribute, sublicense, and/or sell copies of the Software, and to permit "
+		"persons to whom the Software is furnished to do so, subject to the "
+		"following conditions:\n\n"
 		"The above copyright notice and this permission notice shall be included in all "
 		"copies or substantial portions of the Software.\n\n"
 		"THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR "
@@ -485,8 +496,11 @@ GKAboutDialog::GKAboutDialog(QWidget *parent) : QDialog(parent)
 		"OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE "
 		"SOFTWARE.\n\n"
 		"---\n\n"
-		"OBS Studio is licensed under the GNU General Public License v2.0.\n"
-		"AMD AMF SDK is Copyright (c) Advanced Micro Devices, Inc.");
+		"Bundled third-party components retain their own licenses. See "
+		"THIRD_PARTY_LICENSES.md installed alongside the application.\n\n"
+		"OBS Studio: Copyright (C) Hugh Bailey and contributors.\n"
+		"AMD AMF SDK: Copyright (c) Advanced Micro Devices, Inc.\n\n"
+		"Source: https://github.com/georgekgr12/RDNACast");
 	eulaBrowser->setReadOnly(true);
 	layout->addWidget(eulaBrowser);
 

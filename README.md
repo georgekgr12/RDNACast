@@ -60,7 +60,7 @@ RDNA Cast is a **lightweight fork of [OBS Studio](https://obsproject.com) 31.0.3
 - **Close-to-tray** — X minimizes to system tray (like Steam/AMD Adrenalin). Recording keeps running
 - **Tray controls** — right-click for Stream, Record, Replay Buffer, Save Replay, Exit
 - **Built-in update checker** — Help → Check for Updates fetches from GitHub Releases
-- **About dialog** with MIT + OBS GPLv2 license
+- **About dialog** with GPLv2-or-later, MIT additions, and bundled-library notices
 - **Windows installer** with custom branding via Inno Setup
 
 ### AMD Encoder Fixes
@@ -155,8 +155,8 @@ If you use RDNA Cast and want to support the upstream project that makes it poss
 
 ## License
 
-- RDNA Cast additions: **MIT License** — Copyright (c) 2026 George Karagioules
-- OBS Studio base: **GNU General Public License v2.0** — see [COPYING](COPYING)
-- Bundled third-party libraries: see [THIRD_PARTY_LICENSES.md](THIRD_PARTY_LICENSES.md)
+RDNA Cast is an OBS Studio fork. The combined application and binary distributions are redistributed under the **GNU General Public License v2.0 or later**; see [COPYING](COPYING).
 
-Full text in [installer_assets/LICENSE.txt](installer_assets/LICENSE.txt) (shipped in the installer).
+Original RDNA Cast additions are also offered under the **MIT License** by George Karagioules. That MIT grant applies only to original RDNA Cast additions and does not relicense OBS Studio or the combined OBS-derived application.
+
+Bundled third-party libraries retain their own licenses. See [THIRD_PARTY_LICENSES.md](THIRD_PARTY_LICENSES.md). Installers ship `LICENSE.txt`, `COPYING`, `AUTHORS`, and `THIRD_PARTY_LICENSES.md` alongside the application.

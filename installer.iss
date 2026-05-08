@@ -68,6 +68,9 @@ Source: "UI\cmake\windows\obs-studio.ico"; DestDir: "{app}\bin\64bit"; Flags: ig
 Source: "installer_assets\portable_mode"; DestDir: "{app}"; Flags: onlyifdoesntexist
 ; License
 Source: "installer_assets\LICENSE.txt"; DestDir: "{app}"; Flags: ignoreversion
+Source: "COPYING"; DestDir: "{app}"; Flags: ignoreversion
+Source: "AUTHORS"; DestDir: "{app}"; Flags: ignoreversion
+Source: "THIRD_PARTY_LICENSES.md"; DestDir: "{app}"; Flags: ignoreversion
 
 [Dirs]
 ; Pre-create config directory with user write permissions

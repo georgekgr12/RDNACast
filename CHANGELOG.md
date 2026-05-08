@@ -8,7 +8,7 @@ All notable changes to this project. Format follows [Keep a Changelog](https://k
 - **Project rebranded from `GK OBS Lite AMD Edition` to `RDNA Cast`** for trademark compliance
 - New About dialog text, window title, and installer branding
 - New product name in all user-facing strings (en-US.ini)
-- Added explicit non-affiliation disclaimer to README, About dialog, and EULA — clarifies independence from AMD and the OBS Project
+- Added explicit non-affiliation disclaimer to README, About dialog, and installer license notice — clarifies independence from AMD and the OBS Project
 - Added `THIRD_PARTY_LICENSES.md` aggregating all bundled-library licenses
 - Added this `CHANGELOG.md`
 
@@ -59,7 +59,7 @@ All notable changes to this project. Format follows [Keep a Changelog](https://k
 ### Added
 - Custom assisted-update system pulling from GitHub Releases
 - Tray controls (Stream, Record, Replay Buffer, Save Replay, Exit)
-- About dialog with MIT + OBS GPLv2 attribution
+- About dialog with GPLv2-or-later, MIT additions, and bundled-library attribution
 
 ## [0.5.0] — initial public release
 

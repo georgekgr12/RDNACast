@@ -1,6 +1,8 @@
 # Third-Party Licenses
 
-RDNA Cast is built on top of and bundles software from the projects listed below. Each is distributed under its own license. RDNA Cast itself is dual-licensed: MIT for original additions ([installer_assets/LICENSE.txt](installer_assets/LICENSE.txt)) and GPL-2.0-or-later for the OBS Studio base ([COPYING](COPYING)).
+RDNA Cast is built on top of and bundles software from the projects listed below. Each component is distributed under its own license. Because RDNA Cast is an OBS Studio fork, the combined application and binary distributions are redistributed under GPL-2.0-or-later ([COPYING](COPYING)).
+
+Original RDNA Cast additions are also offered under the MIT License by George Karagioules; that grant applies only to those original additions and does not relicense OBS Studio or the combined OBS-derived application.
 
 This file is a courtesy summary — the authoritative license for each component is the LICENSE / COPYING file shipped in its respective source directory.
 

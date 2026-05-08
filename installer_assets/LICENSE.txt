@@ -1,23 +1,46 @@
-RDNA Cast — End User License Agreement
-========================================
+RDNA Cast - License Notice
+==========================
 
-RDNA Cast is an independent software project. It is not affiliated with,
-endorsed by, or sponsored by Advanced Micro Devices, Inc. or the OBS Project.
-"AMD", "Radeon", and "RDNA" are trademarks of Advanced Micro Devices, Inc.,
-used here only descriptively to indicate target hardware compatibility.
+RDNA Cast is an independent open-source software project. It is not
+affiliated with, endorsed by, or sponsored by Advanced Micro Devices, Inc.
+or the OBS Project. "AMD", "Radeon", and "RDNA" are trademarks of
+Advanced Micro Devices, Inc., used here only descriptively to indicate
+target hardware compatibility.
 
-==============================================================================
+Combined Application License
+----------------------------
 
-MIT License — RDNA Cast additions
+RDNA Cast is a fork of OBS Studio. The combined application and binary
+distributions are redistributed under the GNU General Public License
+version 2.0 or, at your option, any later version (GPL-2.0-or-later).
+
+You may redistribute and/or modify the combined application under the terms
+of the GNU General Public License as published by the Free Software
+Foundation, either version 2 of the License, or (at your option) any later
+version.
+
+The complete GPL text is installed with this application as COPYING.
+
+OBS Studio
+Copyright (C) Hugh Bailey and contributors
+Source: https://github.com/obsproject/obs-studio
+License text: COPYING
+
+RDNA Cast Original Additions
+----------------------------
+
+Original RDNA Cast additions are also offered under the MIT License:
+
+MIT License
 
 Copyright (c) 2026 George Karagioules
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+of the original RDNA Cast additions and associated documentation files (the
+"Software"), to deal in the Software without restriction, including without
+limitation the rights to use, copy, modify, merge, publish, distribute,
+sublicense, and/or sell copies of the Software, and to permit persons to
+whom the Software is furnished to do so, subject to the following conditions:
 
 The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
@@ -30,41 +53,30 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-==============================================================================
+This MIT grant applies only to original RDNA Cast additions and does not
+relicense OBS Studio or the combined OBS-derived application.
 
-GPL v2.0 — OBS Studio base
+Third-Party Components
+----------------------
 
-This software is based on OBS Studio, which is licensed under the
-GNU General Public License v2.0 (GPLv2).
+Bundled third-party components retain their own licenses. See
+THIRD_PARTY_LICENSES.md, installed alongside the application, for the
+component summary and source references.
 
-OBS Studio
-Copyright (C) Hugh Bailey and contributors
-https://obsproject.com
+Notable components include OBS Studio, FFmpeg, x264, Qt, libcurl, zlib,
+libpng, json11, libcaption, blake2, w32-pthreads, librtmp, and the AMD AMF
+SDK.
 
-This program is free software; you can redistribute it and/or modify it under
-the terms of the GNU General Public License as published by the Free Software
-Foundation; either version 2 of the License, or (at your option) any later
-version.
+Source Availability
+-------------------
 
-This program is distributed in the hope that it will be useful, but WITHOUT
-ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+Corresponding source code for RDNA Cast is available at:
+https://github.com/georgekgr12/RDNACast
 
-The full text of the GPL v2 license can be found at:
-https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+Release binaries are published at:
+https://github.com/georgekgr12/RDNACast_Releases
 
-==============================================================================
+License inquiries:
+https://github.com/georgekgr12/RDNACast/issues
 
-Third-party libraries
-
-AMD AMF SDK
-Copyright (c) Advanced Micro Devices, Inc. All rights reserved.
-
-Additional bundled libraries (FFmpeg, x264, Qt, libcurl, json11, blake2,
-libcaption, libdshowcapture, w32-pthreads) are distributed under their
-respective licenses. See THIRD_PARTY_LICENSES.md in the source distribution
-for full details.
-
-==============================================================================
-
-By installing this software, you agree to the terms above.
+By installing this software, you acknowledge the license terms above.
