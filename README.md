@@ -17,6 +17,14 @@
   <a href="#building">Building</a>
 </p>
 
+## App Screenshots
+
+<p align="center">
+  <img src="docs/screenshots/rdna-cast-app-1.png" alt="RDNA Cast main window" width="32%">
+  <img src="docs/screenshots/rdna-cast-app-2.png" alt="RDNA Cast tray controls" width="32%">
+  <img src="docs/screenshots/rdna-cast-app-3.png" alt="RDNA Cast settings" width="32%">
+</p>
+
 ---
 
 ## Disclaimer
