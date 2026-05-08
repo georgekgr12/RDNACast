@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/georgekgr12/RDNACast_Releases/releases">Download</a> &bull;
+  <a href="https://github.com/georgekgr12/RDNACast/releases">Download</a> &bull;
   <a href="#features">Features</a> &bull;
   <a href="#performance">Performance</a> &bull;
   <a href="#amd-encoder-fixes">AMD Fixes</a> &bull;

@@ -73,8 +73,8 @@ Source Availability
 Corresponding source code for RDNA Cast is available at:
 https://github.com/georgekgr12/RDNACast
 
-Release binaries are published at:
-https://github.com/georgekgr12/RDNACast_Releases
+Release binaries are published in the source repository:
+https://github.com/georgekgr12/RDNACast/releases
 
 License inquiries:
 https://github.com/georgekgr12/RDNACast/issues

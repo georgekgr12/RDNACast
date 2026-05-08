@@ -17,7 +17,7 @@ cmake --build build_amd_lite --config RelWithDebInfo --parallel
 
 ## Repo
 - GitHub: https://github.com/georgekgr12/RDNACast (renamed from `GK_OBS_LITE_AMD` in v0.7.0)
-- Releases: https://github.com/georgekgr12/RDNACast_Releases
+- Releases: https://github.com/georgekgr12/RDNACast/releases
 - Branch: `main` only (no dev branch)
 - Tags: semver starting at `v0.5.0`
 - Based on OBS Studio 31.0.3 (upstream remote: `upstream`)
