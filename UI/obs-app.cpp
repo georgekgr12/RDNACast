@@ -496,9 +496,7 @@ void OBSApp::InitUserConfigDefaults()
 	config_set_default_bool(userConfig, "BasicWindow", "RecordWhenStreaming", false);
 	config_set_default_bool(userConfig, "BasicWindow", "KeepRecordingWhenStreamStops", false);
 	config_set_default_bool(userConfig, "BasicWindow", "StatusOverlayEnabled", false);
-	config_set_default_bool(userConfig, "BasicWindow", "StatusOverlayGameSafeMode", true);
 	config_set_default_string(userConfig, "BasicWindow", "StatusOverlayPosition", "BottomRight");
-	config_set_default_int(userConfig, "BasicWindow", "StatusOverlayOpacity", 85);
 	config_set_default_bool(userConfig, "BasicWindow", "SysTrayEnabled", true);
 #ifdef OBS_AMD_LITE
 	config_set_default_bool(userConfig, "BasicWindow", "SysTrayWhenStarted", false);

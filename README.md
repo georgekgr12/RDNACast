@@ -69,7 +69,7 @@ RDNA Cast is a **lightweight fork of [OBS Studio](https://obsproject.com) 31.0.3
 - **Portable by default** — settings, scenes, profiles live next to the executable
 - **Close-to-tray** — X minimizes to system tray (like Steam/AMD Adrenalin). Recording keeps running
 - **Tray controls** — right-click for Stream, Record, Replay Buffer, Save Replay, Exit
-- **Lightweight status overlay** — optional always-on-top overlay with corner placement and opacity controls
+- **Performance status HUD** — optional always-on-top opaque badge with corner placement
 - **Combined output status** — shows `LIVE`, `REC`, `REPLAY`, or combined states like `LIVE + REC + REPLAY`
 - **Capture-hidden overlay window** — the overlay is marked to stay out of supported Windows captures while remaining visible on your monitor
 - **Built-in assisted updater** — Help → Check for Updates fetches the latest installer from GitHub Releases
@@ -78,10 +78,10 @@ RDNA Cast is a **lightweight fork of [OBS Studio](https://obsproject.com) 31.0.3
 
 ### Status Overlay
 
-The optional status overlay lives in **Settings → General → Status Overlay**. It is designed to be tiny and low overhead:
+The optional status overlay lives in **Settings → General → Status Overlay**. It is now a persistent performance HUD designed to avoid the stutter risk of translucent overlays:
 
 - Four fixed screen positions: top-left, top-right, bottom-left, bottom-right
-- Adjustable opacity
+- Opaque, tiny badge with no window opacity or translucent background
 - Hidden while idle
 - Visible only when streaming, recording, or replay buffer is active
 - Combines active states, for example `REC + REPLAY` or `LIVE + REC + REPLAY`

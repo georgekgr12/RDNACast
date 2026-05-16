@@ -2160,10 +2160,8 @@ void OBSBasic::UpdateStatusOverlaySettings()
 
 	config_t *config = App()->GetUserConfig();
 	statusOverlay->SetOverlayEnabled(config_get_bool(config, "BasicWindow", "StatusOverlayEnabled"));
-	statusOverlay->SetGameSafeMode(config_get_bool(config, "BasicWindow", "StatusOverlayGameSafeMode"));
 	statusOverlay->SetOverlayPosition(
 		StatusOverlayPositionFromString(config_get_string(config, "BasicWindow", "StatusOverlayPosition")));
-	statusOverlay->SetOverlayOpacity((int)config_get_int(config, "BasicWindow", "StatusOverlayOpacity"));
 
 	SyncStatusOverlayState();
 }

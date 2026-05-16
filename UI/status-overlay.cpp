@@ -49,15 +49,6 @@ const char *StatusOverlayPositionToString(StatusOverlayPosition position)
 	}
 }
 
-int ClampStatusOverlayOpacity(int opacity)
-{
-	if (opacity < 20)
-		return 20;
-	if (opacity > 100)
-		return 100;
-	return opacity;
-}
-
 QRect StatusOverlayGeometryForScreen(const QRect &screenGeometry, const QSize &overlaySize,
 				     StatusOverlayPosition position, int margin)
 {
@@ -80,25 +71,18 @@ OBSStatusOverlay::OBSStatusOverlay(QWidget *owner_) : QWidget(nullptr), owner(ow
 {
 	setWindowFlags(Qt::Tool | Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint |
 		       Qt::WindowDoesNotAcceptFocus);
-	setAttribute(Qt::WA_TranslucentBackground);
 	setAttribute(Qt::WA_ShowWithoutActivating);
 	setAttribute(Qt::WA_TransparentForMouseEvents);
 	setAttribute(Qt::WA_NativeWindow);
-	setFixedSize(210, 44);
-	setWindowOpacity(opacity / 100.0);
+	setAttribute(Qt::WA_OpaquePaintEvent);
+	setAttribute(Qt::WA_NoSystemBackground);
+	setFixedSize(186, 28);
 
 	ApplyCaptureExclusionProperty();
 
 	flashTimer.setSingleShot(true);
 	connect(&flashTimer, &QTimer::timeout, this, [this] {
 		flashText.clear();
-		RefreshVisibility();
-		update();
-	});
-
-	activeToastTimer.setSingleShot(true);
-	connect(&activeToastTimer, &QTimer::timeout, this, [this] {
-		activeToastVisible = false;
 		RefreshVisibility();
 		update();
 	});
@@ -110,26 +94,7 @@ void OBSStatusOverlay::SetOverlayEnabled(bool enabled_)
 		return;
 
 	enabled = enabled_;
-	if (enabled && gameSafeMode)
-		StartActiveToast();
 	RefreshVisibility();
-}
-
-void OBSStatusOverlay::SetGameSafeMode(bool enabled_)
-{
-	if (gameSafeMode == enabled_)
-		return;
-
-	gameSafeMode = enabled_;
-	if (gameSafeMode)
-		StartActiveToast();
-	else {
-		activeToastVisible = false;
-		activeToastTimer.stop();
-	}
-
-	RefreshVisibility();
-	update();
 }
 
 void OBSStatusOverlay::SetOverlayPosition(StatusOverlayPosition position_)
@@ -141,23 +106,12 @@ void OBSStatusOverlay::SetOverlayPosition(StatusOverlayPosition position_)
 	Reposition();
 }
 
-void OBSStatusOverlay::SetOverlayOpacity(int opacity_)
-{
-	const int clampedOpacity = ClampStatusOverlayOpacity(opacity_);
-	if (opacity == clampedOpacity)
-		return;
-
-	opacity = clampedOpacity;
-	setWindowOpacity(opacity / 100.0);
-}
-
 void OBSStatusOverlay::SetStreaming(bool active)
 {
 	if (streaming == active)
 		return;
 
 	streaming = active;
-	StartActiveToast();
 	RefreshVisibility();
 	update();
 }
@@ -170,7 +124,6 @@ void OBSStatusOverlay::SetRecording(bool active)
 	recording = active;
 	if (!recording)
 		recordingPaused = false;
-	StartActiveToast();
 	RefreshVisibility();
 	update();
 }
@@ -181,7 +134,6 @@ void OBSStatusOverlay::SetRecordingPaused(bool paused)
 		return;
 
 	recordingPaused = paused;
-	StartActiveToast();
 	RefreshVisibility();
 	update();
 }
@@ -192,7 +144,6 @@ void OBSStatusOverlay::SetReplayBuffer(bool active)
 		return;
 
 	replayBuffer = active;
-	StartActiveToast();
 	RefreshVisibility();
 	update();
 }
@@ -204,7 +155,6 @@ void OBSStatusOverlay::FlashAction(const QString &text)
 
 	flashText = text;
 	flashTimer.start(1200);
-	StartActiveToast();
 	RefreshVisibility();
 	update();
 }
@@ -229,24 +179,19 @@ void OBSStatusOverlay::paintEvent(QPaintEvent *event)
 	(void)event;
 
 	QPainter painter(this);
-	painter.setRenderHint(QPainter::Antialiasing);
-
-	const QRectF bounds = rect().adjusted(1, 1, -1, -1);
-	painter.setPen(QColor(255, 255, 255, 38));
-	painter.setBrush(QColor(13, 15, 18, 235));
-	painter.drawRoundedRect(bounds, 8, 8);
 
 	const QColor accent = StatusColor();
-	painter.setPen(Qt::NoPen);
-	painter.setBrush(accent);
-	painter.drawEllipse(QRectF(14, 16, 12, 12));
+	painter.fillRect(rect(), QColor(12, 13, 15));
+	painter.fillRect(QRect(0, 0, 4, height()), accent);
+	painter.setPen(QColor(255, 255, 255, 80));
+	painter.drawRect(rect().adjusted(0, 0, -1, -1));
 
 	QFont textFont = font();
 	textFont.setBold(true);
 	textFont.setPointSize(10);
 	painter.setFont(textFont);
 	painter.setPen(QColor(246, 248, 250));
-	painter.drawText(QRect(34, 0, width() - 44, height()), Qt::AlignVCenter | Qt::AlignLeft, StatusText());
+	painter.drawText(QRect(13, 0, width() - 18, height()), Qt::AlignVCenter | Qt::AlignLeft, StatusText());
 }
 
 void OBSStatusOverlay::showEvent(QShowEvent *event)
@@ -291,27 +236,7 @@ QColor OBSStatusOverlay::StatusColor() const
 
 bool OBSStatusOverlay::HasActiveStatus() const
 {
-	if (!HasRawActiveStatus())
-		return false;
-
-	if (!gameSafeMode)
-		return true;
-
-	return activeToastVisible || !flashText.isEmpty();
-}
-
-bool OBSStatusOverlay::HasRawActiveStatus() const
-{
-	return streaming || recording || replayBuffer;
-}
-
-void OBSStatusOverlay::StartActiveToast()
-{
-	if (!gameSafeMode || !HasRawActiveStatus())
-		return;
-
-	activeToastVisible = true;
-	activeToastTimer.start(3500);
+	return streaming || recording || replayBuffer || !flashText.isEmpty();
 }
 
 void OBSStatusOverlay::Reposition()

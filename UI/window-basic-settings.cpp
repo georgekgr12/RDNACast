@@ -389,9 +389,7 @@ OBSBasicSettings::OBSBasicSettings(QWidget *parent)
 	HookWidget(ui->replayWhileStreaming, CHECK_CHANGED,  GENERAL_CHANGED);
 	HookWidget(ui->keepReplayStreamStops,CHECK_CHANGED,  GENERAL_CHANGED);
 	HookWidget(statusOverlayEnabled,  CHECK_CHANGED,  GENERAL_CHANGED);
-	HookWidget(statusOverlayGameSafeMode, CHECK_CHANGED, GENERAL_CHANGED);
 	HookWidget(statusOverlayPosition, COMBO_CHANGED,  GENERAL_CHANGED);
-	HookWidget(statusOverlayOpacity,  &QSlider::valueChanged, GENERAL_CHANGED);
 	HookWidget(ui->systemTrayEnabled,    CHECK_CHANGED,  GENERAL_CHANGED);
 	HookWidget(ui->systemTrayWhenStarted,CHECK_CHANGED,  GENERAL_CHANGED);
 	HookWidget(ui->systemTrayAlways,     CHECK_CHANGED,  GENERAL_CHANGED);
@@ -1332,9 +1330,6 @@ void OBSBasicSettings::InitStatusOverlaySettingsUi()
 
 	statusOverlayEnabled = new QCheckBox(QTStr("Basic.Settings.General.StatusOverlay.Enable"), overlayGroup);
 	statusOverlayEnabled->setToolTip(QTStr("Basic.Settings.General.StatusOverlay.Tooltip"));
-	statusOverlayGameSafeMode =
-		new QCheckBox(QTStr("Basic.Settings.General.StatusOverlay.GameSafeMode"), overlayGroup);
-	statusOverlayGameSafeMode->setToolTip(QTStr("Basic.Settings.General.StatusOverlay.GameSafeMode.Tooltip"));
 
 	statusOverlayPosition = new QComboBox(overlayGroup);
 	statusOverlayPosition->addItem(QTStr("Basic.Settings.General.StatusOverlay.Position.TopLeft"),
@@ -1346,30 +1341,10 @@ void OBSBasicSettings::InitStatusOverlaySettingsUi()
 	statusOverlayPosition->addItem(QTStr("Basic.Settings.General.StatusOverlay.Position.BottomRight"),
 				       QString::fromUtf8(StatusOverlayPositionToString(StatusOverlayPosition::BottomRight)));
 
-	statusOverlayOpacity = new QSlider(Qt::Horizontal, overlayGroup);
-	statusOverlayOpacity->setRange(20, 100);
-	statusOverlayOpacity->setSingleStep(5);
-	statusOverlayOpacity->setPageStep(10);
-
-	statusOverlayOpacityValue = new QLabel(overlayGroup);
-	statusOverlayOpacityValue->setMinimumWidth(42);
-	statusOverlayOpacityValue->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
-
-	QWidget *opacityWidget = new QWidget(overlayGroup);
-	QHBoxLayout *opacityLayout = new QHBoxLayout(opacityWidget);
-	opacityLayout->setContentsMargins(0, 0, 0, 0);
-	opacityLayout->addWidget(statusOverlayOpacity);
-	opacityLayout->addWidget(statusOverlayOpacityValue);
-
 	overlayLayout->addRow(QString(), statusOverlayEnabled);
-	overlayLayout->addRow(QString(), statusOverlayGameSafeMode);
 	overlayLayout->addRow(QTStr("Basic.Settings.General.StatusOverlay.Position"), statusOverlayPosition);
-	overlayLayout->addRow(QTStr("Basic.Settings.General.StatusOverlay.Opacity"), opacityWidget);
 
 	connect(statusOverlayEnabled, &QCheckBox::toggled, this, &OBSBasicSettings::SetStatusOverlayControlsEnabled);
-	connect(statusOverlayOpacity, &QSlider::valueChanged, this, [this](int value) {
-		statusOverlayOpacityValue->setText(QStringLiteral("%1%").arg(value));
-	});
 
 	QVBoxLayout *generalLayout = qobject_cast<QVBoxLayout *>(ui->groupBox_16->parentWidget()->layout());
 	if (generalLayout) {
@@ -1381,9 +1356,6 @@ void OBSBasicSettings::InitStatusOverlaySettingsUi()
 void OBSBasicSettings::SetStatusOverlayControlsEnabled(bool enabled)
 {
 	statusOverlayPosition->setEnabled(enabled);
-	statusOverlayGameSafeMode->setEnabled(enabled);
-	statusOverlayOpacity->setEnabled(enabled);
-	statusOverlayOpacityValue->setEnabled(enabled);
 }
 
 void OBSBasicSettings::LoadGeneralSettings()
@@ -1435,10 +1407,6 @@ void OBSBasicSettings::LoadGeneralSettings()
 	bool overlayEnabled = config_get_bool(App()->GetUserConfig(), "BasicWindow", "StatusOverlayEnabled");
 	statusOverlayEnabled->setChecked(overlayEnabled);
 
-	bool overlayGameSafeMode =
-		config_get_bool(App()->GetUserConfig(), "BasicWindow", "StatusOverlayGameSafeMode");
-	statusOverlayGameSafeMode->setChecked(overlayGameSafeMode);
-
 	const char *overlayPositionConfig =
 		config_get_string(App()->GetUserConfig(), "BasicWindow", "StatusOverlayPosition");
 	QString overlayPosition =
@@ -1447,10 +1415,6 @@ void OBSBasicSettings::LoadGeneralSettings()
 	if (overlayPositionIndex != -1)
 		statusOverlayPosition->setCurrentIndex(overlayPositionIndex);
 
-	int overlayOpacity =
-		ClampStatusOverlayOpacity((int)config_get_int(App()->GetUserConfig(), "BasicWindow", "StatusOverlayOpacity"));
-	statusOverlayOpacity->setValue(overlayOpacity);
-	statusOverlayOpacityValue->setText(QStringLiteral("%1%").arg(overlayOpacity));
 	SetStatusOverlayControlsEnabled(overlayEnabled);
 
 	bool systemTrayEnabled = config_get_bool(App()->GetUserConfig(), "BasicWindow", "SysTrayEnabled");
@@ -3221,19 +3185,9 @@ void OBSBasicSettings::SaveGeneralSettings()
 				statusOverlayEnabled->isChecked());
 		statusOverlayChanged = true;
 	}
-	if (WidgetChanged(statusOverlayGameSafeMode)) {
-		config_set_bool(App()->GetUserConfig(), "BasicWindow", "StatusOverlayGameSafeMode",
-				statusOverlayGameSafeMode->isChecked());
-		statusOverlayChanged = true;
-	}
 	if (WidgetChanged(statusOverlayPosition)) {
 		QByteArray position = statusOverlayPosition->currentData().toString().toUtf8();
 		config_set_string(App()->GetUserConfig(), "BasicWindow", "StatusOverlayPosition", position.constData());
-		statusOverlayChanged = true;
-	}
-	if (WidgetChanged(statusOverlayOpacity)) {
-		config_set_int(App()->GetUserConfig(), "BasicWindow", "StatusOverlayOpacity",
-			       statusOverlayOpacity->value());
 		statusOverlayChanged = true;
 	}
 	if (statusOverlayChanged)

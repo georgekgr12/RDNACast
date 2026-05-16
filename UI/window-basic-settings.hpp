@@ -161,10 +161,7 @@ private:
 
 	QIcon hotkeyConflictIcon;
 	QCheckBox *statusOverlayEnabled = nullptr;
-	QCheckBox *statusOverlayGameSafeMode = nullptr;
 	QComboBox *statusOverlayPosition = nullptr;
-	QSlider *statusOverlayOpacity = nullptr;
-	QLabel *statusOverlayOpacityValue = nullptr;
 
 	void SaveCombo(QComboBox *widget, const char *section, const char *value);
 	void SaveComboData(QComboBox *widget, const char *section, const char *value);

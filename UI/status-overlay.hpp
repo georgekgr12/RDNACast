@@ -22,7 +22,6 @@ enum class StatusOverlayPosition {
 
 StatusOverlayPosition StatusOverlayPositionFromString(const char *position);
 const char *StatusOverlayPositionToString(StatusOverlayPosition position);
-int ClampStatusOverlayOpacity(int opacity);
 QRect StatusOverlayGeometryForScreen(const QRect &screenGeometry, const QSize &overlaySize,
 				     StatusOverlayPosition position, int margin);
 
@@ -31,9 +30,7 @@ public:
 	explicit OBSStatusOverlay(QWidget *owner);
 
 	void SetOverlayEnabled(bool enabled);
-	void SetGameSafeMode(bool enabled);
 	void SetOverlayPosition(StatusOverlayPosition position);
-	void SetOverlayOpacity(int opacity);
 	void SetStreaming(bool active);
 	void SetRecording(bool active);
 	void SetRecordingPaused(bool paused);
@@ -49,20 +46,14 @@ private:
 	QString StatusText() const;
 	QColor StatusColor() const;
 	bool HasActiveStatus() const;
-	bool HasRawActiveStatus() const;
-	void StartActiveToast();
 	void Reposition();
 	void ApplyCaptureExclusionProperty();
 
 	QPointer<QWidget> owner;
 	QTimer flashTimer;
-	QTimer activeToastTimer;
 	QString flashText;
 	StatusOverlayPosition position = StatusOverlayPosition::BottomRight;
-	int opacity = 85;
 	bool enabled = false;
-	bool gameSafeMode = true;
-	bool activeToastVisible = false;
 	bool streaming = false;
 	bool recording = false;
 	bool recordingPaused = false;

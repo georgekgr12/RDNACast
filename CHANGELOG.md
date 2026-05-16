@@ -2,6 +2,12 @@
 
 All notable changes to this project. Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.7.20] — 2026-05-16
+
+### Changed
+- Replaced the old translucent status overlay system with a persistent opaque performance HUD.
+- Removed overlay opacity and game-safe auto-hide controls; the HUD now uses a small solid badge to reduce compositor overhead while staying visible during active stream, recording, or replay states.
+
 ## [0.7.19] — 2026-05-16
 
 ### Added
@@ -113,6 +119,7 @@ All notable changes to this project. Format follows [Keep a Changelog](https://k
 - Close-to-tray behavior
 - Inno Setup installer with custom branding
 
+[0.7.20]: https://github.com/karagioules/RDNA_Cast/releases/tag/v0.7.20
 [0.7.19]: https://github.com/karagioules/RDNA_Cast/releases/tag/v0.7.19
 [0.7.18]: https://github.com/karagioules/RDNA_Cast/releases/tag/v0.7.18
 [0.7.17]: https://github.com/karagioules/RDNA_Cast/releases/tag/v0.7.17
