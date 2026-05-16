@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/georgekgr12/RDNACast/releases">Download</a> &bull;
+  <a href="https://github.com/karagioules/RDNA_Cast/releases/latest">Download</a> &bull;
   <a href="#features">Features</a> &bull;
   <a href="#performance">Performance</a> &bull;
   <a href="#amd-encoder-fixes">AMD Fixes</a> &bull;
@@ -23,6 +23,8 @@
   <img src="docs/screenshots/rdna-cast-app-1.png" alt="RDNA Cast main window" width="32%">
   <img src="docs/screenshots/rdna-cast-app-2.png" alt="RDNA Cast tray controls" width="32%">
   <img src="docs/screenshots/rdna-cast-app-3.png" alt="RDNA Cast settings" width="32%">
+  <br>
+  <img src="docs/screenshots/status-overlay-settings.svg" alt="Status Overlay settings" width="68%">
 </p>
 
 ---
@@ -67,9 +69,24 @@ RDNA Cast is a **lightweight fork of [OBS Studio](https://obsproject.com) 31.0.3
 - **Portable by default** — settings, scenes, profiles live next to the executable
 - **Close-to-tray** — X minimizes to system tray (like Steam/AMD Adrenalin). Recording keeps running
 - **Tray controls** — right-click for Stream, Record, Replay Buffer, Save Replay, Exit
-- **Built-in update checker** — Help → Check for Updates fetches from GitHub Releases
+- **Lightweight status overlay** — optional always-on-top overlay with corner placement and opacity controls
+- **Combined output status** — shows `LIVE`, `REC`, `REPLAY`, or combined states like `LIVE + REC + REPLAY`
+- **Capture-hidden overlay window** — the overlay is marked to stay out of supported Windows captures while remaining visible on your monitor
+- **Built-in assisted updater** — Help → Check for Updates fetches the latest installer from GitHub Releases
 - **About dialog** with GPLv2-or-later, MIT additions, and bundled-library notices
 - **Windows installer** with custom branding via Inno Setup
+
+### Status Overlay
+
+The optional status overlay lives in **Settings → General → Status Overlay**. It is designed to be tiny and low overhead:
+
+- Four fixed screen positions: top-left, top-right, bottom-left, bottom-right
+- Adjustable opacity
+- Hidden while idle
+- Visible only when streaming, recording, or replay buffer is active
+- Combines active states, for example `REC + REPLAY` or `LIVE + REC + REPLAY`
+- Briefly flashes `SAVE` when saving replay while the replay buffer is active
+- Uses Windows display affinity to keep the overlay out of captures where supported
 
 ### AMD Encoder Fixes
 
@@ -134,8 +151,8 @@ Any AMD system with a Zen 2+ CPU and RDNA+ GPU should work. AVX2 required (all Z
 
 ### Quick Build
 ```cmd
-git clone https://github.com/georgekgr12/RDNACast.git
-cd RDNACast
+git clone https://github.com/karagioules/RDNA_Cast.git
+cd RDNA_Cast
 cmake --preset amd-lite-x64
 cmake --build build_amd_lite --config RelWithDebInfo --parallel
 ```
