@@ -2,6 +2,15 @@
 
 All notable changes to this project. Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.7.13] — 2026-05-16
+
+### Added
+- Lightweight status overlay with corner placement and opacity controls under Settings → General.
+- Overlay status flashes for stream, recording, replay buffer, hotkey, and main control actions.
+
+### Changed
+- Assisted updater now checks releases from `karagioules/RDNA_Cast`.
+
 ## [0.7.0] — 2026-05-04
 
 ### Changed — Rebrand
@@ -71,6 +80,7 @@ All notable changes to this project. Format follows [Keep a Changelog](https://k
 - Close-to-tray behavior
 - Inno Setup installer with custom branding
 
+[0.7.13]: https://github.com/karagioules/RDNA_Cast/releases/tag/v0.7.13
 [0.7.0]: https://github.com/georgekgr12/RDNACast/releases/tag/v0.7.0
 [0.6.7]: https://github.com/georgekgr12/RDNACast/releases/tag/v0.6.7
 [0.6.6]: https://github.com/georgekgr12/RDNACast/releases/tag/v0.6.6

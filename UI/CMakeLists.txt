@@ -83,6 +83,8 @@ target_sources(
     platform.hpp
     qt-display.cpp
     qt-display.hpp
+    status-overlay.cpp
+    status-overlay.hpp
     ui-config.h
     ui-validation.cpp
     ui-validation.hpp

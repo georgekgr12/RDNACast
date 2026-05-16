@@ -57,6 +57,7 @@ class QListWidgetItem;
 class VolControl;
 class OBSBasicStats;
 class OBSBasicVCamConfig;
+class OBSStatusOverlay;
 
 #include "ui_OBSBasic.h"
 #include "ui_ColorSelect.h"
@@ -291,6 +292,7 @@ private:
 	QPointer<QTimer> diskFullTimer;
 
 	QPointer<QTimer> nudge_timer;
+	std::unique_ptr<OBSStatusOverlay> statusOverlay;
 	bool recent_nudge = false;
 
 	os_cpu_usage_info_t *cpuUsageInfo = nullptr;
@@ -898,6 +900,7 @@ public:
 	OBSScene GetCurrentScene();
 
 	void SysTrayNotify(const QString &text, QSystemTrayIcon::MessageIcon n);
+	void UpdateStatusOverlaySettings();
 
 	inline OBSSource GetCurrentSceneSource()
 	{
@@ -1021,6 +1024,8 @@ public:
 	void CreateFilterPasteUndoRedoAction(const QString &text, obs_source_t *source, obs_data_array_t *undo_array,
 					     obs_data_array_t *redo_array);
 
+	void InitStatusOverlay();
+	void SyncStatusOverlayState(const QString &flashText = QString());
 	void SetDisplayAffinity(QWindow *window);
 
 	QColor GetSelectionColor() const;

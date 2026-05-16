@@ -49,6 +49,7 @@
 #include "visibility-item-widget.hpp"
 #include "item-widget-helpers.hpp"
 #include "basic-controls.hpp"
+#include "status-overlay.hpp"
 #include "window-basic-settings.hpp"
 #include "window-namedialog.hpp"
 #include "window-basic-auto-config.hpp"
@@ -368,6 +369,8 @@ OBSBasic::OBSBasic(QWidget *parent) : OBSMainWindow(parent), undo_s(ui), ui(new 
 		},
 		Qt::DirectConnection);
 
+	InitStatusOverlay();
+
 	/* Add controls dock */
 	OBSBasicControls *controls = new OBSBasicControls(this);
 	controlsDock = new OBSDock(this);
@@ -393,6 +396,25 @@ OBSBasic::OBSBasic(QWidget *parent) : OBSMainWindow(parent), undo_s(ui), ui(new 
 
 	connect(controls, &OBSBasicControls::VirtualCamButtonClicked, this, &OBSBasic::VirtualCamActionTriggered);
 	connect(controls, &OBSBasicControls::VirtualCamConfigButtonClicked, this, &OBSBasic::OpenVirtualCamConfig);
+
+	connect(controls, &OBSBasicControls::StreamButtonClicked, this,
+		[this] { SyncStatusOverlayState(QStringLiteral("ACTION")); });
+	connect(controls, &OBSBasicControls::StartStreamMenuActionClicked, this,
+		[this] { SyncStatusOverlayState(QStringLiteral("ACTION")); });
+	connect(controls, &OBSBasicControls::StopStreamMenuActionClicked, this,
+		[this] { SyncStatusOverlayState(QStringLiteral("ACTION")); });
+	connect(controls, &OBSBasicControls::ForceStopStreamMenuActionClicked, this,
+		[this] { SyncStatusOverlayState(QStringLiteral("ACTION")); });
+	connect(controls, &OBSBasicControls::RecordButtonClicked, this,
+		[this] { SyncStatusOverlayState(QStringLiteral("ACTION")); });
+	connect(controls, &OBSBasicControls::PauseRecordButtonClicked, this,
+		[this] { SyncStatusOverlayState(QStringLiteral("ACTION")); });
+	connect(controls, &OBSBasicControls::ReplayBufferButtonClicked, this,
+		[this] { SyncStatusOverlayState(QStringLiteral("ACTION")); });
+	connect(controls, &OBSBasicControls::SaveReplayBufferButtonClicked, this,
+		[this] { SyncStatusOverlayState(QStringLiteral("ACTION")); });
+	connect(controls, &OBSBasicControls::VirtualCamButtonClicked, this,
+		[this] { SyncStatusOverlayState(QStringLiteral("ACTION")); });
 
 	connect(controls, &OBSBasicControls::StudioModeButtonClicked, this, &OBSBasic::TogglePreviewProgramMode);
 
@@ -2120,6 +2142,67 @@ void OBSBasic::ResetOutputs()
 	}
 }
 
+void OBSBasic::InitStatusOverlay()
+{
+	statusOverlay = std::make_unique<OBSStatusOverlay>(this);
+
+	connect(this, &OBSBasic::StreamingStarting, this,
+		[this](bool) { SyncStatusOverlayState(QStringLiteral("STARTING")); });
+	connect(this, &OBSBasic::StreamingStarted, this, [this](bool) { SyncStatusOverlayState(QStringLiteral("LIVE")); });
+	connect(this, &OBSBasic::StreamingStopping, this,
+		[this] { SyncStatusOverlayState(QStringLiteral("STOPPING")); });
+	connect(this, &OBSBasic::StreamingStopped, this,
+		[this](bool) { SyncStatusOverlayState(QStringLiteral("LIVE OFF")); });
+
+	connect(this, &OBSBasic::RecordingStarted, this, [this](bool) { SyncStatusOverlayState(QStringLiteral("REC")); });
+	connect(this, &OBSBasic::RecordingPaused, this, [this] { SyncStatusOverlayState(QStringLiteral("PAUSED")); });
+	connect(this, &OBSBasic::RecordingUnpaused, this, [this] { SyncStatusOverlayState(QStringLiteral("REC")); });
+	connect(this, &OBSBasic::RecordingStopping, this,
+		[this] { SyncStatusOverlayState(QStringLiteral("STOPPING")); });
+	connect(this, &OBSBasic::RecordingStopped, this,
+		[this] { SyncStatusOverlayState(QStringLiteral("REC OFF")); });
+
+	connect(this, &OBSBasic::ReplayBufStarted, this,
+		[this] { SyncStatusOverlayState(QStringLiteral("REPLAY")); });
+	connect(this, &OBSBasic::ReplayBufStopping, this,
+		[this] { SyncStatusOverlayState(QStringLiteral("STOPPING")); });
+	connect(this, &OBSBasic::ReplayBufStopped, this,
+		[this] { SyncStatusOverlayState(QStringLiteral("REPLAY OFF")); });
+
+	UpdateStatusOverlaySettings();
+}
+
+void OBSBasic::UpdateStatusOverlaySettings()
+{
+	if (!statusOverlay)
+		return;
+
+	config_t *config = App()->GetUserConfig();
+	statusOverlay->SetOverlayEnabled(config_get_bool(config, "BasicWindow", "StatusOverlayEnabled"));
+	statusOverlay->SetOverlayPosition(
+		StatusOverlayPositionFromString(config_get_string(config, "BasicWindow", "StatusOverlayPosition")));
+	statusOverlay->SetOverlayOpacity((int)config_get_int(config, "BasicWindow", "StatusOverlayOpacity"));
+
+	SyncStatusOverlayState();
+}
+
+void OBSBasic::SyncStatusOverlayState(const QString &flashText)
+{
+	if (!statusOverlay)
+		return;
+
+	statusOverlay->SetStreaming(StreamingActive());
+	statusOverlay->SetRecording(RecordingActive());
+	statusOverlay->SetRecordingPaused(recordingPaused);
+	statusOverlay->SetReplayBuffer(ReplayBufferActive());
+
+	if (!flashText.isEmpty())
+		statusOverlay->FlashAction(flashText);
+
+	if (statusOverlay->isVisible() && statusOverlay->windowHandle())
+		SetDisplayAffinity(statusOverlay->windowHandle());
+}
+
 #define STARTUP_SEPARATOR "==== Startup complete ==============================================="
 #define SHUTDOWN_SEPARATOR "==== Shutting down =================================================="
 
@@ -2790,6 +2873,9 @@ void OBSBasic::InitHotkeys()
 
 void OBSBasic::ProcessHotkey(obs_hotkey_id id, bool pressed)
 {
+	if (pressed && statusOverlay)
+		statusOverlay->FlashAction(QStringLiteral("HOTKEY"));
+
 	obs_hotkey_trigger_routed_callback(id, pressed);
 }
 
@@ -10383,6 +10469,7 @@ void OBSBasic::SetDisplayAffinity(QWindow *window)
 		return;
 
 	bool hideFromCapture = config_get_bool(App()->GetUserConfig(), "BasicWindow", "HideOBSWindowsFromCapture");
+	bool forceHideFromCapture = window->property("forceHideFromCapture") == true;
 
 	// Don't hide projectors, those are designed to be visible / captured
 	if (window->property("isOBSProjectorWindow") == true)
@@ -10393,9 +10480,9 @@ void OBSBasic::SetDisplayAffinity(QWindow *window)
 
 	DWORD curAffinity;
 	if (GetWindowDisplayAffinity(hwnd, &curAffinity)) {
-		if (hideFromCapture && curAffinity != WDA_EXCLUDEFROMCAPTURE)
+		if ((hideFromCapture || forceHideFromCapture) && curAffinity != WDA_EXCLUDEFROMCAPTURE)
 			SetWindowDisplayAffinity(hwnd, WDA_EXCLUDEFROMCAPTURE);
-		else if (!hideFromCapture && curAffinity != WDA_NONE)
+		else if (!hideFromCapture && !forceHideFromCapture && curAffinity != WDA_NONE)
 			SetWindowDisplayAffinity(hwnd, WDA_NONE);
 	}
 
