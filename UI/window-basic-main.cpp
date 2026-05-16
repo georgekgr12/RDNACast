@@ -2186,6 +2186,11 @@ void OBSBasic::UpdateStatusOverlaySettings()
 	SyncStatusOverlayState();
 }
 
+void OBSBasic::FlashStatusOverlay(const QString &flashText)
+{
+	SyncStatusOverlayState(flashText);
+}
+
 void OBSBasic::SyncStatusOverlayState(const QString &flashText)
 {
 	if (!statusOverlay)

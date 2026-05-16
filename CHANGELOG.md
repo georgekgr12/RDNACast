@@ -2,6 +2,11 @@
 
 All notable changes to this project. Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.7.14] — 2026-05-16
+
+### Changed
+- Status overlay settings now flash `READY` when applied, so placement and visibility can be confirmed immediately.
+
 ## [0.7.13] — 2026-05-16
 
 ### Added
@@ -80,6 +85,7 @@ All notable changes to this project. Format follows [Keep a Changelog](https://k
 - Close-to-tray behavior
 - Inno Setup installer with custom branding
 
+[0.7.14]: https://github.com/karagioules/RDNA_Cast/releases/tag/v0.7.14
 [0.7.13]: https://github.com/karagioules/RDNA_Cast/releases/tag/v0.7.13
 [0.7.0]: https://github.com/georgekgr12/RDNACast/releases/tag/v0.7.0
 [0.6.7]: https://github.com/georgekgr12/RDNACast/releases/tag/v0.6.7

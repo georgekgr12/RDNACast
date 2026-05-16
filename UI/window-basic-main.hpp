@@ -901,6 +901,7 @@ public:
 
 	void SysTrayNotify(const QString &text, QSystemTrayIcon::MessageIcon n);
 	void UpdateStatusOverlaySettings();
+	void FlashStatusOverlay(const QString &flashText);
 
 	inline OBSSource GetCurrentSceneSource()
 	{
