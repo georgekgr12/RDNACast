@@ -31,6 +31,7 @@ public:
 	explicit OBSStatusOverlay(QWidget *owner);
 
 	void SetOverlayEnabled(bool enabled);
+	void SetGameSafeMode(bool enabled);
 	void SetOverlayPosition(StatusOverlayPosition position);
 	void SetOverlayOpacity(int opacity);
 	void SetStreaming(bool active);
@@ -48,15 +49,20 @@ private:
 	QString StatusText() const;
 	QColor StatusColor() const;
 	bool HasActiveStatus() const;
+	bool HasRawActiveStatus() const;
+	void StartActiveToast();
 	void Reposition();
 	void ApplyCaptureExclusionProperty();
 
 	QPointer<QWidget> owner;
 	QTimer flashTimer;
+	QTimer activeToastTimer;
 	QString flashText;
 	StatusOverlayPosition position = StatusOverlayPosition::BottomRight;
 	int opacity = 85;
 	bool enabled = false;
+	bool gameSafeMode = true;
+	bool activeToastVisible = false;
 	bool streaming = false;
 	bool recording = false;
 	bool recordingPaused = false;

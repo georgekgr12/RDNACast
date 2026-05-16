@@ -95,52 +95,104 @@ OBSStatusOverlay::OBSStatusOverlay(QWidget *owner_) : QWidget(nullptr), owner(ow
 		RefreshVisibility();
 		update();
 	});
+
+	activeToastTimer.setSingleShot(true);
+	connect(&activeToastTimer, &QTimer::timeout, this, [this] {
+		activeToastVisible = false;
+		RefreshVisibility();
+		update();
+	});
 }
 
 void OBSStatusOverlay::SetOverlayEnabled(bool enabled_)
 {
+	if (enabled == enabled_)
+		return;
+
 	enabled = enabled_;
+	if (enabled && gameSafeMode)
+		StartActiveToast();
 	RefreshVisibility();
+}
+
+void OBSStatusOverlay::SetGameSafeMode(bool enabled_)
+{
+	if (gameSafeMode == enabled_)
+		return;
+
+	gameSafeMode = enabled_;
+	if (gameSafeMode)
+		StartActiveToast();
+	else {
+		activeToastVisible = false;
+		activeToastTimer.stop();
+	}
+
+	RefreshVisibility();
+	update();
 }
 
 void OBSStatusOverlay::SetOverlayPosition(StatusOverlayPosition position_)
 {
+	if (position == position_)
+		return;
+
 	position = position_;
 	Reposition();
 }
 
 void OBSStatusOverlay::SetOverlayOpacity(int opacity_)
 {
-	opacity = ClampStatusOverlayOpacity(opacity_);
+	const int clampedOpacity = ClampStatusOverlayOpacity(opacity_);
+	if (opacity == clampedOpacity)
+		return;
+
+	opacity = clampedOpacity;
 	setWindowOpacity(opacity / 100.0);
 }
 
 void OBSStatusOverlay::SetStreaming(bool active)
 {
+	if (streaming == active)
+		return;
+
 	streaming = active;
+	StartActiveToast();
 	RefreshVisibility();
 	update();
 }
 
 void OBSStatusOverlay::SetRecording(bool active)
 {
+	if (recording == active)
+		return;
+
 	recording = active;
 	if (!recording)
 		recordingPaused = false;
+	StartActiveToast();
 	RefreshVisibility();
 	update();
 }
 
 void OBSStatusOverlay::SetRecordingPaused(bool paused)
 {
+	if (recordingPaused == paused)
+		return;
+
 	recordingPaused = paused;
+	StartActiveToast();
 	RefreshVisibility();
 	update();
 }
 
 void OBSStatusOverlay::SetReplayBuffer(bool active)
 {
+	if (replayBuffer == active)
+		return;
+
 	replayBuffer = active;
+	StartActiveToast();
 	RefreshVisibility();
 	update();
 }
@@ -152,6 +204,7 @@ void OBSStatusOverlay::FlashAction(const QString &text)
 
 	flashText = text;
 	flashTimer.start(1200);
+	StartActiveToast();
 	RefreshVisibility();
 	update();
 }
@@ -162,9 +215,10 @@ void OBSStatusOverlay::RefreshVisibility()
 
 	if (shouldShow) {
 		Reposition();
-		if (!isVisible())
+		if (!isVisible()) {
 			show();
-		raise();
+			raise();
+		}
 	} else if (isVisible()) {
 		hide();
 	}
@@ -237,7 +291,27 @@ QColor OBSStatusOverlay::StatusColor() const
 
 bool OBSStatusOverlay::HasActiveStatus() const
 {
+	if (!HasRawActiveStatus())
+		return false;
+
+	if (!gameSafeMode)
+		return true;
+
+	return activeToastVisible || !flashText.isEmpty();
+}
+
+bool OBSStatusOverlay::HasRawActiveStatus() const
+{
 	return streaming || recording || replayBuffer;
+}
+
+void OBSStatusOverlay::StartActiveToast()
+{
+	if (!gameSafeMode || !HasRawActiveStatus())
+		return;
+
+	activeToastVisible = true;
+	activeToastTimer.start(3500);
 }
 
 void OBSStatusOverlay::Reposition()
@@ -251,7 +325,9 @@ void OBSStatusOverlay::Reposition()
 	if (!screen)
 		return;
 
-	setGeometry(StatusOverlayGeometryForScreen(screen->availableGeometry(), size(), position, 24));
+	const QRect targetGeometry = StatusOverlayGeometryForScreen(screen->availableGeometry(), size(), position, 24);
+	if (geometry() != targetGeometry)
+		setGeometry(targetGeometry);
 }
 
 void OBSStatusOverlay::ApplyCaptureExclusionProperty()

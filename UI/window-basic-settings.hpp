@@ -161,6 +161,7 @@ private:
 
 	QIcon hotkeyConflictIcon;
 	QCheckBox *statusOverlayEnabled = nullptr;
+	QCheckBox *statusOverlayGameSafeMode = nullptr;
 	QComboBox *statusOverlayPosition = nullptr;
 	QSlider *statusOverlayOpacity = nullptr;
 	QLabel *statusOverlayOpacityValue = nullptr;

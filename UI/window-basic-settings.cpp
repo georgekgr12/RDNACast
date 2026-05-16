@@ -389,6 +389,7 @@ OBSBasicSettings::OBSBasicSettings(QWidget *parent)
 	HookWidget(ui->replayWhileStreaming, CHECK_CHANGED,  GENERAL_CHANGED);
 	HookWidget(ui->keepReplayStreamStops,CHECK_CHANGED,  GENERAL_CHANGED);
 	HookWidget(statusOverlayEnabled,  CHECK_CHANGED,  GENERAL_CHANGED);
+	HookWidget(statusOverlayGameSafeMode, CHECK_CHANGED, GENERAL_CHANGED);
 	HookWidget(statusOverlayPosition, COMBO_CHANGED,  GENERAL_CHANGED);
 	HookWidget(statusOverlayOpacity,  &QSlider::valueChanged, GENERAL_CHANGED);
 	HookWidget(ui->systemTrayEnabled,    CHECK_CHANGED,  GENERAL_CHANGED);
@@ -1331,6 +1332,9 @@ void OBSBasicSettings::InitStatusOverlaySettingsUi()
 
 	statusOverlayEnabled = new QCheckBox(QTStr("Basic.Settings.General.StatusOverlay.Enable"), overlayGroup);
 	statusOverlayEnabled->setToolTip(QTStr("Basic.Settings.General.StatusOverlay.Tooltip"));
+	statusOverlayGameSafeMode =
+		new QCheckBox(QTStr("Basic.Settings.General.StatusOverlay.GameSafeMode"), overlayGroup);
+	statusOverlayGameSafeMode->setToolTip(QTStr("Basic.Settings.General.StatusOverlay.GameSafeMode.Tooltip"));
 
 	statusOverlayPosition = new QComboBox(overlayGroup);
 	statusOverlayPosition->addItem(QTStr("Basic.Settings.General.StatusOverlay.Position.TopLeft"),
@@ -1358,6 +1362,7 @@ void OBSBasicSettings::InitStatusOverlaySettingsUi()
 	opacityLayout->addWidget(statusOverlayOpacityValue);
 
 	overlayLayout->addRow(QString(), statusOverlayEnabled);
+	overlayLayout->addRow(QString(), statusOverlayGameSafeMode);
 	overlayLayout->addRow(QTStr("Basic.Settings.General.StatusOverlay.Position"), statusOverlayPosition);
 	overlayLayout->addRow(QTStr("Basic.Settings.General.StatusOverlay.Opacity"), opacityWidget);
 
@@ -1376,6 +1381,7 @@ void OBSBasicSettings::InitStatusOverlaySettingsUi()
 void OBSBasicSettings::SetStatusOverlayControlsEnabled(bool enabled)
 {
 	statusOverlayPosition->setEnabled(enabled);
+	statusOverlayGameSafeMode->setEnabled(enabled);
 	statusOverlayOpacity->setEnabled(enabled);
 	statusOverlayOpacityValue->setEnabled(enabled);
 }
@@ -1428,6 +1434,10 @@ void OBSBasicSettings::LoadGeneralSettings()
 
 	bool overlayEnabled = config_get_bool(App()->GetUserConfig(), "BasicWindow", "StatusOverlayEnabled");
 	statusOverlayEnabled->setChecked(overlayEnabled);
+
+	bool overlayGameSafeMode =
+		config_get_bool(App()->GetUserConfig(), "BasicWindow", "StatusOverlayGameSafeMode");
+	statusOverlayGameSafeMode->setChecked(overlayGameSafeMode);
 
 	const char *overlayPositionConfig =
 		config_get_string(App()->GetUserConfig(), "BasicWindow", "StatusOverlayPosition");
@@ -3209,6 +3219,11 @@ void OBSBasicSettings::SaveGeneralSettings()
 	if (WidgetChanged(statusOverlayEnabled)) {
 		config_set_bool(App()->GetUserConfig(), "BasicWindow", "StatusOverlayEnabled",
 				statusOverlayEnabled->isChecked());
+		statusOverlayChanged = true;
+	}
+	if (WidgetChanged(statusOverlayGameSafeMode)) {
+		config_set_bool(App()->GetUserConfig(), "BasicWindow", "StatusOverlayGameSafeMode",
+				statusOverlayGameSafeMode->isChecked());
 		statusOverlayChanged = true;
 	}
 	if (WidgetChanged(statusOverlayPosition)) {

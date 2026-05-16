@@ -2,6 +2,14 @@
 
 All notable changes to this project. Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.7.19] — 2026-05-16
+
+### Added
+- Game-safe status overlay mode that auto-hides the translucent overlay between status notifications to reduce gameplay stutter.
+
+### Changed
+- Status overlay now avoids redundant reposition, raise, and repaint work when status values have not changed.
+
 ## [0.7.18] — 2026-05-16
 
 ### Fixed
@@ -105,6 +113,7 @@ All notable changes to this project. Format follows [Keep a Changelog](https://k
 - Close-to-tray behavior
 - Inno Setup installer with custom branding
 
+[0.7.19]: https://github.com/karagioules/RDNA_Cast/releases/tag/v0.7.19
 [0.7.18]: https://github.com/karagioules/RDNA_Cast/releases/tag/v0.7.18
 [0.7.17]: https://github.com/karagioules/RDNA_Cast/releases/tag/v0.7.17
 [0.7.16]: https://github.com/karagioules/RDNA_Cast/releases/tag/v0.7.16
