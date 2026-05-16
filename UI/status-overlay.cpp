@@ -14,6 +14,7 @@
 #include <QPaintEvent>
 #include <QScreen>
 #include <QShowEvent>
+#include <QStringList>
 #include <QWindow>
 
 #include <cstring>
@@ -83,7 +84,7 @@ OBSStatusOverlay::OBSStatusOverlay(QWidget *owner_) : QWidget(nullptr), owner(ow
 	setAttribute(Qt::WA_ShowWithoutActivating);
 	setAttribute(Qt::WA_TransparentForMouseEvents);
 	setAttribute(Qt::WA_NativeWindow);
-	setFixedSize(156, 44);
+	setFixedSize(210, 44);
 	setWindowOpacity(opacity / 100.0);
 
 	ApplyCaptureExclusionProperty();
@@ -206,18 +207,18 @@ QString OBSStatusOverlay::StatusText() const
 	if (!flashText.isEmpty())
 		return flashText;
 
-	if (streaming && recording)
-		return QStringLiteral("LIVE + REC");
-	if (streaming)
-		return QStringLiteral("LIVE");
-	if (recording && recordingPaused)
-		return QStringLiteral("PAUSED");
-	if (recording)
-		return QStringLiteral("REC");
-	if (replayBuffer)
-		return QStringLiteral("REPLAY");
+	QStringList states;
 
-	return QString();
+	if (streaming)
+		states.push_back(QStringLiteral("LIVE"));
+	if (recording && recordingPaused)
+		states.push_back(QStringLiteral("PAUSED"));
+	else if (recording)
+		states.push_back(QStringLiteral("REC"));
+	if (replayBuffer)
+		states.push_back(QStringLiteral("REPLAY"));
+
+	return states.join(QStringLiteral(" + "));
 }
 
 QColor OBSStatusOverlay::StatusColor() const
