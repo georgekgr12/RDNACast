@@ -2,6 +2,11 @@
 
 All notable changes to this project. Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.7.17] — 2026-05-16
+
+### Fixed
+- Replay buffer `SAVE` overlay notification now triggers from the saved event, so hotkeys, tray actions, frontend calls, and the UI button all behave the same.
+
 ## [0.7.16] — 2026-05-16
 
 ### Changed
@@ -95,6 +100,7 @@ All notable changes to this project. Format follows [Keep a Changelog](https://k
 - Close-to-tray behavior
 - Inno Setup installer with custom branding
 
+[0.7.17]: https://github.com/karagioules/RDNA_Cast/releases/tag/v0.7.17
 [0.7.16]: https://github.com/karagioules/RDNA_Cast/releases/tag/v0.7.16
 [0.7.15]: https://github.com/karagioules/RDNA_Cast/releases/tag/v0.7.15
 [0.7.14]: https://github.com/karagioules/RDNA_Cast/releases/tag/v0.7.14

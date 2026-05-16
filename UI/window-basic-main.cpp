@@ -397,12 +397,6 @@ OBSBasic::OBSBasic(QWidget *parent) : OBSMainWindow(parent), undo_s(ui), ui(new 
 	connect(controls, &OBSBasicControls::VirtualCamButtonClicked, this, &OBSBasic::VirtualCamActionTriggered);
 	connect(controls, &OBSBasicControls::VirtualCamConfigButtonClicked, this, &OBSBasic::OpenVirtualCamConfig);
 
-	connect(controls, &OBSBasicControls::SaveReplayBufferButtonClicked, this,
-		[this] {
-			if (ReplayBufferActive())
-				SyncStatusOverlayState(QStringLiteral("SAVE"));
-		});
-
 	connect(controls, &OBSBasicControls::StudioModeButtonClicked, this, &OBSBasic::TogglePreviewProgramMode);
 
 	connect(controls, &OBSBasicControls::SettingsButtonClicked, this, &OBSBasic::on_action_Settings_triggered);
@@ -7613,6 +7607,8 @@ void OBSBasic::ReplayBufferSaved()
 	OnEvent(OBS_FRONTEND_EVENT_REPLAY_BUFFER_SAVED);
 
 #ifdef OBS_AMD_LITE
+	SyncStatusOverlayState(QStringLiteral("SAVE"));
+
 	if (!isVisible()) {
 		QString filename = QFileInfo(QT_UTF8(path.c_str())).fileName();
 		SysTrayNotify(QStringLiteral("Replay saved: %1").arg(filename), QSystemTrayIcon::Information);
