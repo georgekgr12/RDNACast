@@ -4938,7 +4938,11 @@ void OBSBasicSettings::SimpleStreamingEncoderChanged()
 		ui->simpleOutPreset->addItem("Balanced", "balanced");
 		ui->simpleOutPreset->addItem("Quality", "quality");
 
+#ifdef OBS_AMD_LITE
+		defaultPreset = "speed";
+#else
 		defaultPreset = "balanced";
+#endif
 		preset = curAMDPreset;
 	} else if (encoder == SIMPLE_ENCODER_APPLE_H264
 #ifdef ENABLE_HEVC
@@ -4956,7 +4960,11 @@ void OBSBasicSettings::SimpleStreamingEncoderChanged()
 		ui->simpleOutPreset->addItem("Quality", "quality");
 		ui->simpleOutPreset->addItem("High Quality", "highQuality");
 
+#ifdef OBS_AMD_LITE
+		defaultPreset = "speed";
+#else
 		defaultPreset = "balanced";
+#endif
 		preset = curAMDAV1Preset;
 	} else {
 

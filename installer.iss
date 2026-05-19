@@ -3,7 +3,7 @@
 
 #define MyAppName "RDNA Cast"
 #define MyAppNameShort "RDNACast"
-#define MyAppVersion "0.7.21"
+#define MyAppVersion "0.7.22"
 #define MyAppPublisher "George Karagioules"
 #define MyAppExeName "obs64.exe"
 ; New AppId for RDNA Cast (separate from legacy GK_OBS_Lite_AMD).

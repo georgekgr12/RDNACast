@@ -7,7 +7,7 @@ echo   Target: AMD Radeon (Zen 2+ / RDNA+)
 echo ============================================================
 echo.
 
-set "APP_VERSION=0.7.21"
+set "APP_VERSION=0.7.22"
 set "INSTALLER_NAME=RDNA_Cast_Setup_%APP_VERSION%.exe"
 
 :: Step 0: Find Visual Studio

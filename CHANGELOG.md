@@ -2,6 +2,13 @@
 
 All notable changes to this project. Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.7.22] - 2026-05-19
+
+### Changed
+- The main controls Exit button now performs a real app shutdown instead of following close-to-tray behavior.
+- Floating dock windows, including chat and browser docks, now hide with the main window when RDNA Cast is minimized or sent to tray and restore with it.
+- AMD streaming presets now default to Speed for lower game-time encoder overhead.
+
 ## [0.7.21] — 2026-05-16
 
 ### Removed
@@ -125,6 +132,7 @@ All notable changes to this project. Format follows [Keep a Changelog](https://k
 - Close-to-tray behavior
 - Inno Setup installer with custom branding
 
+[0.7.22]: https://github.com/karagioules/RDNA_Cast/releases/tag/v0.7.22
 [0.7.21]: https://github.com/karagioules/RDNA_Cast/releases/tag/v0.7.21
 [0.7.20]: https://github.com/karagioules/RDNA_Cast/releases/tag/v0.7.20
 [0.7.19]: https://github.com/karagioules/RDNA_Cast/releases/tag/v0.7.19

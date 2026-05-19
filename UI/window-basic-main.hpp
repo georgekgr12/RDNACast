@@ -542,6 +542,8 @@ private:
 #ifdef OBS_AMD_LITE
 	bool forceClose = false;
 	bool sysTrayCloseToTray();
+	void HideVisibleFloatingDocks();
+	void RestoreVisibleFloatingDocks();
 	QPointer<QAction> sysTrayReplayBufferSave;
 public:
 	void ForceClose();
@@ -555,6 +557,9 @@ private:
 	QList<QMessageBox *> visMsgBoxes;
 
 	QList<QPoint> visDlgPositions;
+#ifdef OBS_AMD_LITE
+	QList<QPointer<QDockWidget>> visFloatingDocks;
+#endif
 
 	QByteArray startingDockLayout;
 

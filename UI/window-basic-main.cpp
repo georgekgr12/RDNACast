@@ -398,7 +398,11 @@ OBSBasic::OBSBasic(QWidget *parent) : OBSMainWindow(parent), undo_s(ui), ui(new 
 
 	connect(controls, &OBSBasicControls::SettingsButtonClicked, this, &OBSBasic::on_action_Settings_triggered);
 
+#ifdef OBS_AMD_LITE
+	connect(controls, &OBSBasicControls::ExitButtonClicked, this, &OBSBasic::ForceClose);
+#else
 	connect(controls, &OBSBasicControls::ExitButtonClicked, this, &QMainWindow::close);
+#endif
 
 	startingDockLayout = saveState();
 
@@ -1794,8 +1798,8 @@ bool OBSBasic::InitBasicConfigDefaults()
 	config_set_default_string(activeConfiguration, "SimpleOutput", "Preset", "veryfast");
 	config_set_default_string(activeConfiguration, "SimpleOutput", "NVENCPreset2", "p5");
 #ifdef OBS_AMD_LITE
-	config_set_default_string(activeConfiguration, "SimpleOutput", "AMDPreset", "balanced");
-	config_set_default_string(activeConfiguration, "SimpleOutput", "AMDAV1Preset", "balanced");
+	config_set_default_string(activeConfiguration, "SimpleOutput", "AMDPreset", "speed");
+	config_set_default_string(activeConfiguration, "SimpleOutput", "AMDAV1Preset", "speed");
 #endif
 	config_set_default_string(activeConfiguration, "SimpleOutput", "RecQuality", "Stream");
 	config_set_default_bool(activeConfiguration, "SimpleOutput", "RecRB", false);
@@ -5008,11 +5012,7 @@ void OBSBasic::closeEvent(QCloseEvent *event)
 #ifdef OBS_AMD_LITE
 	if (!forceClose && trayIcon && trayIcon->isVisible() && sysTrayCloseToTray()) {
 		event->ignore();
-		hide();
-		if (previewEnabled)
-			EnablePreviewDisplay(false);
-		if (showHide)
-			showHide->setText(QTStr("Basic.SystemTray.Show"));
+		SetShowing(false);
 		trayIcon->showMessage("RDNA Cast",
 				      QTStr("Basic.SystemTray.ClosedToTray"),
 				      QSystemTrayIcon::Information, 3000);
@@ -5146,7 +5146,13 @@ void OBSBasic::changeEvent(QEvent *event)
 
 			if (previewEnabled)
 				EnablePreviewDisplay(false);
+#ifdef OBS_AMD_LITE
+			HideVisibleFloatingDocks();
+#endif
 		} else if (stateEvent->oldState() & Qt::WindowMinimized && isVisible()) {
+#ifdef OBS_AMD_LITE
+			RestoreVisibleFloatingDocks();
+#endif
 			if (previewEnabled)
 				EnablePreviewDisplay(true);
 		}
@@ -9223,6 +9229,10 @@ void OBSBasic::SetShowing(bool showing)
 			}
 		}
 
+#ifdef OBS_AMD_LITE
+		HideVisibleFloatingDocks();
+#endif
+
 		if (showHide)
 			showHide->setText(QTStr("Basic.SystemTray.Show"));
 		QTimer::singleShot(0, this, &OBSBasic::hide);
@@ -9241,6 +9251,10 @@ void OBSBasic::SetShowing(bool showing)
 
 		if (previewEnabled)
 			EnablePreviewDisplay(true);
+
+#ifdef OBS_AMD_LITE
+		RestoreVisibleFloatingDocks();
+#endif
 
 #ifdef __APPLE__
 		EnableOSXDockIcon(true);
@@ -9443,6 +9457,30 @@ bool OBSBasic::sysTrayMinimizeToTray()
 bool OBSBasic::sysTrayCloseToTray()
 {
 	return config_get_bool(App()->GetUserConfig(), "BasicWindow", "SysTrayCloseToTray");
+}
+
+void OBSBasic::HideVisibleFloatingDocks()
+{
+	if (!visFloatingDocks.isEmpty())
+		return;
+
+	const QList<QDockWidget *> docks = findChildren<QDockWidget *>();
+	for (QDockWidget *dock : docks) {
+		if (dock && dock->isFloating() && dock->isVisible()) {
+			visFloatingDocks.push_back(QPointer<QDockWidget>(dock));
+			dock->hide();
+		}
+	}
+}
+
+void OBSBasic::RestoreVisibleFloatingDocks()
+{
+	for (QPointer<QDockWidget> dock : visFloatingDocks) {
+		if (dock)
+			dock->show();
+	}
+
+	visFloatingDocks.clear();
 }
 
 void OBSBasic::ForceClose()
