@@ -17,7 +17,7 @@
  * runs it, and restarts the app.
  * ============================================================ */
 
-#define GK_OBS_LITE_VERSION "0.7.27"
+#define GK_OBS_LITE_VERSION "0.7.28"
 #define GK_OBS_LITE_PRODUCT_NAME "RDNA Cast"
 #define GK_OBS_LITE_RELEASES_REPO "gkaragioul/RDNA_Cast"
 #define GK_OBS_LITE_RELEASES_API "https://api.github.com/repos/" GK_OBS_LITE_RELEASES_REPO "/releases/latest"
